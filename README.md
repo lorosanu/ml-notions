@@ -4,7 +4,7 @@ This repository contains some terminology and descriptions of several aspects re
 
 ## Table of contents
 
-* [Machine learning]()
+* [Machine learning](01_machine_learning.md)
 * [Popular algorithms]()
 * [Neural networks]()
     * [Definitions]()
