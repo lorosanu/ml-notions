@@ -7,7 +7,7 @@ This repository contains some terminology and descriptions of several aspects re
 * [Machine learning](01_machine_learning.md)
 * [Popular algorithms]()
 * [Neural networks]()
-    * [Definitions]()
+    * [Definitions](03_NN_definitions.md)
     * [Weight initialization]()
     * [Activation functions](03_NN_activations.md)
     * [Optimization]()
