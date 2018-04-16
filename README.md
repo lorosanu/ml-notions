@@ -14,7 +14,7 @@ This repository contains some terminology and descriptions of several aspects re
         * [Dropout](03_NN_optimization_dropout.md)
         * [Regularization](03_NN_optimization_regularization.md)
         * [Gradient descent with momentum](03_NN_optimization_momentum.md)
-        * [Learning rate decay]()
+        * [Learning rate decay](03_NN_optimization_LRdecay.md)
 
 ## Sources
 
