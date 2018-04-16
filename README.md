@@ -9,7 +9,7 @@ This repository contains some terminology and descriptions of several aspects re
 * [Neural networks]()
     * [Definitions]()
     * [Weight initialization]()
-    * [Activation functions]()
+    * [Activation functions](03_NN_activations.md)
     * [Optimization]()
         * [Dropout]()
         * [Regularization]()
