@@ -11,8 +11,8 @@ This repository contains some terminology and descriptions of several aspects re
     * [Activation functions](03_NN_activations.md)
     * [Optimization]()
         * [Weight initialization](03_NN_optimization_initialization.md)
-        * [Dropout]()
-        * [Regularization]()
+        * [Dropout](03_NN_optimization_dropout.md)
+        * [Regularization](03_NN_optimization_regularization.md)
         * [Gradient descent with momentum]()
         * [Learning rate decay]()
 
