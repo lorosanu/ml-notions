@@ -4,21 +4,29 @@
 
 * slowly reduce the learning rate over time
 
-## Reason
+## Why
 
 * afford taking larger steps during the initial steps of learning
 * take smaller steps as learning approaches convergence
 
 ## Formulation
 
-$\alpha = \frac{1}{1 + decay\_rate * epoch\_num} * \alpha_0$
+$\alpha = \frac{1}{1 + decayrate \ \ast \ epochnum} \ \ast \ \alpha_0$
 
 ## Hyperparameters
 
-* $decay\_rate$
+* $decayrate$
 * $\alpha_0$
 
 ## Variations
-* exponential decay: $\alpha=0.95^{epoch\_num} * \alpha_0$
-* constant decay: $\alpha=\frac{k}{\sqrt(epoch\_num)} * \alpha_0$ or $\alpha=\frac{k}{\sqrt(t)} * \alpha_0$
+* exponential decay
+
+    $\alpha=0.95^{\ epochnum\ }\ \ast \ \alpha_0$
+
+* constant decay
+
+    $\alpha=\frac{k}{\sqrt{epochnum}} \ \ast \ \alpha_0$
+
+    $\alpha=\frac{k}{\sqrt{t}} \ \ast \ \alpha_0$
+
 * discrete staircase decay
