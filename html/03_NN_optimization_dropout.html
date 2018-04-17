@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<h1 id="dropout-in-neural-networks">Dropout in neural networks</h1>
+<h2 id="description">Description</h2>
+<ul>
+<li>solution to overtifitting the model</li>
+<li>randomly eliminate <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=p" alt="p" title="p" /> nodes in each hidden neural network layer during training</li>
+<li>train the model using the reduced list of nodes</li>
+</ul>
+<h2 id="implementation-of-inverted-dropout">Implementation of inverted dropout</h2>
+<ul>
+<li><p>set the probability that any given node in a layer will be kept</p>
+<p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=keepprob%20%3D%200.8" alt="keepprob = 0.8" title="keepprob = 0.8" /></p></li>
+<li><p>randomly choose which nodes to drop in layer <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=l" alt="l" title="l" /></p>
+<p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=todrop%5E%7B%5Bl%5D%7D%20%3D%20np.random.rand%28a%5E%7B%5Bl%5D%7D.shape%5B0%5D%2C%5C%20%5C%20a%5E%7B%5Bl%5D%7D.shape%5B1%5D%29%5C%20%3C%5C%20keepprob" alt="todrop^{[l]} = np.random.rand(a^{[l]}.shape[0],\ \ a^{[l]}.shape[1])\ &lt;\ keepprob" title="todrop^{[l]} = np.random.rand(a^{[l]}.shape[0],\ \ a^{[l]}.shape[1])\ &lt;\ keepprob" /></p></li>
+<li><p>drop chosen nodes</p>
+<p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=a%5E%7B%5Bl%5D%7D%20%3D%20np.multiply%28a%5E%7B%5Bl%5D%7D%2C%5C%20todrop%5E%7B%5Bl%5D%7D%29" alt="a^{[l]} = np.multiply(a^{[l]},\ todrop^{[l]})" title="a^{[l]} = np.multiply(a^{[l]},\ todrop^{[l]})" /></p></li>
+<li><p>scale the activation values <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=a%5E%7B%5Bl%5D%7D" alt="a^{[l]}" title="a^{[l]}" /> (<em>invert the dropout</em>) in order to not reduce the expected values of <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=w%5E%7B%5Bl%2B1%5D%7D" alt="w^{[l+1]}" title="w^{[l+1]}" /></p>
+<p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=a%5E%7B%5Bl%5D%7D%20%3D%20%5Cfrac%7Ba%5E%7B%5Bl%5D%7D%7D%7Bkeepprob%7D" alt="a^{[l]} = \frac{a^{[l]}}{keepprob}" title="a^{[l]} = \frac{a^{[l]}}{keepprob}" /></p></li>
+</ul>
+<h2 id="hyperparameters">Hyperparameters</h2>
+<ul>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=keepprob" alt="keepprob" title="keepprob" /></li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<h1 id="regularization-in-neural-networks">Regularization in neural networks</h1>
+<h2 id="definition">Definition</h2>
+<p>A process of introducing additional information in order to solve an ill-posed problem or to prevent overfitting.<br />It penalizes the loss function by adding a multiple of an L1 (Lasso) or an L2 (Ridge) norm of your weights vector <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=w" alt="w" title="w" />.</p>
+<h2 id="why">Why</h2>
+<p>Solve the overfitting problem.</p>
+<h2 id="formulation">Formulation</h2>
+<p>Cost function over <em>m</em> training examples</p>
+<p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Cfrac%7B1%7D%7Bm%7D%20L%28%5Chat%7By%7D%5E%7B%28i%29%7D%2C%20y%5E%7B%28i%29%7D%29%20%5C%20%2B%20%5C%20%5Clambda%20%5C%20%5Cast%20%5C%20R%28w%29" alt="\frac{1}{m} L(\hat{y}^{(i)}, y^{(i)}) \ + \ \lambda \ \ast \ R(w)" title="\frac{1}{m} L(\hat{y}^{(i)}, y^{(i)}) \ + \ \lambda \ \ast \ R(w)" /></p>
+<h2 id="hyperparameters">Hyperparameters</h2>
+<ul>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Clambda" alt="\lambda" title="\lambda" />: the regularization parameter</li>
+</ul>
+<h2 id="variations">Variations</h2>
+<h3 id="l1-regulatization">L1 regulatization</h3>
+<p>Adds the absolute values of the model's coefficients as the penalty term.</p>
+<p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=R%28w%29%20%3D%20%5Cfrac%7B1%7D%7Bm%7D%20%5Csum_%7Bl%3D1%7D%5E%7BL%7D%20%7Cw%5E%7B%5Bl%5D%7D%7C" alt="R(w) = \frac{1}{m} \sum_{l=1}^{L} |w^{[l]}|" title="R(w) = \frac{1}{m} \sum_{l=1}^{L} |w^{[l]}|" /></p>
+<h3 id="l2-regulatization">L2 regulatization</h3>
+<p>Adds the squared magnitude of the model's coefficients as the penalty term.</p>
+<p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=R%28w%29%20%3D%20%5Cfrac%7B1%7D%7B2m%7D%20%5Csum_%7Bl%3D1%7D%5E%7BL%7D%20%7C%7Cw%5E%7B%5Bl%5D%7D%7C%7C%5E2%20%3D%20%5Cfrac%7B1%7D%7B2m%7D%20%5Csum_%7Bl%3D1%7D%5E%7BL%7D%20%5Csum_%7Bi%3Di%7D%5E%7Bn%5E%7B%5Bl-1%5D%7D%7D%20%5Csum_%7Bj%3D1%7D%5E%7Bn%5E%7B%5Bl%5D%7D%7D%20%28w_%7Bij%7D%5E%7B%5Bl%5D%7D%29%5E2" alt="R(w) = \frac{1}{2m} \sum_{l=1}^{L} ||w^{[l]}||^2 = \frac{1}{2m} \sum_{l=1}^{L} \sum_{i=i}^{n^{[l-1]}} \sum_{j=1}^{n^{[l]}} (w_{ij}^{[l]})^2" title="R(w) = \frac{1}{2m} \sum_{l=1}^{L} ||w^{[l]}||^2 = \frac{1}{2m} \sum_{l=1}^{L} \sum_{i=i}^{n^{[l-1]}} \sum_{j=1}^{n^{[l]}} (w_{ij}^{[l]})^2" /></p>
+<p>New formula for weight update</p>
+<p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=W%5E%7B%5Bl%5D%7D%20%3D%20W%5E%7B%5Bl%5D%7D%20%5C%20-%20%5C%20%5Calpha%20%5C%20%5Cast%20%5C%20dW%5E%7B%5Bl%5D%7D%20%3D%20W%5E%7B%5Bl%5D%7D%20-%20%5Calpha%20%5C%20%5Cast%20%5C%20%28amount%5C%20from%5C%20backprob%20%5C%20%2B%20%5C%20%5Cfrac%7B%5Clambda%7D%7Bm%7D%20W%5E%7B%5Bl%5D%7D%29%20" alt="W^{[l]} = W^{[l]} \ - \ \alpha \ \ast \ dW^{[l]} = W^{[l]} - \alpha \ \ast \ (amount\ from\ backprob \ + \ \frac{\lambda}{m} W^{[l]}) " title="W^{[l]} = W^{[l]} \ - \ \alpha \ \ast \ dW^{[l]} = W^{[l]} - \alpha \ \ast \ (amount\ from\ backprob \ + \ \frac{\lambda}{m} W^{[l]}) " /></p>
+<h3 id="elastic-net-l1-l2">Elastic net (L1 + L2)</h3>
+<p>Adds both L1 and L2 penalities.</p>
+<p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=R%28w%29%20%3D%20%20%5Csum_%7Bl%3D1%7D%5E%7BL%7D%5Csum_%7Bi%3D1%7D%5E%7Bn%5E%7B%5Bl-1%5D%7D%7D%20%5Csum_%7Bj%3D1%7D%5E%7Bn%5E%7B%5Bl%5D%7D%7D%20%5Cleft%28%20%5Cbeta%20%5C%20%5Cast%20%5C%20%28w_%7Bi%2Cj%7D%5E%7B%5Bl%5D%7D%29%5E2%20%5C%20%2B%20%5C%20%7Cw_%7Bi%2Cj%7D%5E%7B%5Bl%5D%7D%7C%20%5Cright%29" alt="R(w) =  \sum_{l=1}^{L}\sum_{i=1}^{n^{[l-1]}} \sum_{j=1}^{n^{[l]}} \left( \beta \ \ast \ (w_{i,j}^{[l]})^2 \ + \ |w_{i,j}^{[l]}| \right)" title="R(w) =  \sum_{l=1}^{L}\sum_{i=1}^{n^{[l-1]}} \sum_{j=1}^{n^{[l]}} \left( \beta \ \ast \ (w_{i,j}^{[l]})^2 \ + \ |w_{i,j}^{[l]}| \right)" /></p>
+</body>
+</html>

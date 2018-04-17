@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<h1 id="definitions">Definitions</h1>
+<h2 id="gradient-descent">Gradient descent</h2>
+<ul>
+<li>gradient descent is an iterative optimization algorithm used to minimize a function<br /> by iteratively moving in the direction of <em>steepest descent</em> as defined by the <em>negative of the gradient</em></li>
+<li>use gradient descent to update the parameters (weights <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=w" alt="w" title="w" />, <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=b" alt="b" title="b" />) of the model</li>
+<li>find the optimal weights that reduce the prediction error (minimize loss)</li>
+</ul>
+<p>Gradient descent algorithm</p>
+<ul>
+<li>step 1: initialize the weights with random values and calculate error</li>
+<li>step 2: calculate the gradient (the change in error when the weights are changed by a very small amount);<br /></li>
+<li>step 3: adjust the weights with their gradients; helps move the weights in the direction in which the error is minimized</li>
+<li>step 4: use the new weights for prediction and to calculate the new error</li>
+<li>step 5: repeat steps 2 to 4 untill no significant error reduction</li>
+</ul>
+<h2 id="gradient-ascent">Gradient ascent</h2>
+<p>The optimization alorithm that takes steps proportional to the <em>positive of the gradient</em>, thus approaching a local maximum of that function.</p>
+<h2 id="overfitting">Overfitting</h2>
+<ul>
+<li>when the model is trying too hard to capture the noise in the training dataset</li>
+<li>it models the training data too well</li>
+<li>it doesn't generalize well to new data</li>
+<li><em>solution</em>: use regulatization</li>
+</ul>
+<h2 id="underfitting">Underfitting</h2>
+<ul>
+<li>the model fails to correctly model the training data</li>
+<li>it also doesn't generalize to new data</li>
+<li><em>solution</em>: use a more complex model or a deeper model</li>
+</ul>
+<h2 id="bias-and-variance">Bias and variance</h2>
+<ul>
+<li>depends on the value of an optimal error for the task at hand, which is usually close to 0% (human performance)</li>
+<li>look at the <strong>error</strong> on the <em>train set</em> to determine if you have a <strong>bias problem</strong></li>
+<li>look at the <strong>error difference</strong> between the <em>train set</em> and the <em>test set</em> to determine if you have a <strong>variance</strong> problem</li>
+<li><strong>high bias</strong> (<em>underfitting</em>): large train set and test set error, but similar train/test performance</li>
+<li><strong>high variance</strong> (<em>overfitting</em>): small train set error, but large test set error</li>
+<li>high bias and high variance (<em>underfitting</em> and <em>partially overfitting</em>): large train set error, but even larger test set error</li>
+<li>low bias and low variance (model seems correct): low train set and test set error</li>
+</ul>
+<p>Solutions for high bias (underfitting)</p>
+<ul>
+<li>try bigger network</li>
+<li>train it longer</li>
+<li>try some optimization algorithms</li>
+<li>try a different network architecture</li>
+</ul>
+<p>Solutions for high variance (overfitting)</p>
+<ul>
+<li>get more data (data augmentation; e.g. rotations, flipping, zooming, distortions in images)</li>
+<li>try regularization</li>
+<li>try a different network architecture</li>
+<li>try early stopping</li>
+</ul>
+<p>Note</p>
+<ul>
+<li>less of a trade-off between bias and variance in deep neural networks</li>
+</ul>
+<h2 id="vanishing-and-exploding-gradients">Vanishing and exploding gradients</h2>
+<ul>
+<li>when training very deep neural networks the derivatives can end up either very very big or very very small, which makes training difficult</li>
+<li>the derivatives might increase exponentially or decrease exponentially as a function of <em>L</em> (number of layers), depending on the wights initial values</li>
+<li>make very carefull choices when initializing the weights in order to significantly reduce this problem</li>
+</ul>
+</body>
+</html>

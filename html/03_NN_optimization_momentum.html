@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<h1 id="gradient-descent-with-momentum">Gradient descent with momentum</h1>
+<h2 id="definition">Definition</h2>
+<ul>
+<li>gradient descent with momentum is an optimization algorithm which relies on<br /> computing the <strong>exponentially weighted (moving) averages</strong> of gradients<br /> and using that gradient to update the weights</li>
+<li>build up &quot;velocity&quot; as a running mean of gradients<br /></li>
+<li>step in the direction of the velocity over time</li>
+</ul>
+<h2 id="why">Why</h2>
+<ul>
+<li>move faster towards the minimum loss goal.</li>
+</ul>
+<h2 id="formulation">Formulation</h2>
+<p>The computation of the exponentially weighted averages</p>
+<ul>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=V_%7B0%7D%20%3D%200" alt="V_{0} = 0" title="V_{0} = 0" /></li>
+<li>...</li>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=V_%7Bt%7D%20%5C%20%3D%20%5C%20%5Cbeta%5C%20%5Cast%20%5C%20V_%7Bt-1%7D%20%5C%20%2B%20%5C%20%281%20-%20%5Cbeta%29%5C%20%5Cast%20%5C%20%5Ctheta_t" alt="V_{t} \ = \ \beta\ \ast \ V_{t-1} \ + \ (1 - \beta)\ \ast \ \theta_t" title="V_{t} \ = \ \beta\ \ast \ V_{t-1} \ + \ (1 - \beta)\ \ast \ \theta_t" /></li>
+</ul>
+<p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=V_t" alt="V_t" title="V_t" /> is approximately averaging over <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Cfrac%7B1%7D%7B1%20-%20%5Cbeta%7D" alt="\frac{1}{1 - \beta}" title="\frac{1}{1 - \beta}" /> previous data points</p>
+<ul>
+<li>for <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Cbeta%3D0.5" alt="\beta=0.5" title="\beta=0.5" />, <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=V_t" alt="V_t" title="V_t" /> is averaging over the last 2 values</li>
+<li>for <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Cbeta%3D0.9" alt="\beta=0.9" title="\beta=0.9" />, <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=V_t" alt="V_t" title="V_t" /> is averaging over the last 10 values</li>
+<li>for <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Cbeta%3D0.98" alt="\beta=0.98" title="\beta=0.98" />, <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=V_t" alt="V_t" title="V_t" /> is averaging over the last 50 values</li>
+</ul>
+<p><strong>Bias correction</strong></p>
+<ul>
+<li>problem: fix the initial low estimates due to initializing <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=V_0" alt="V_0" title="V_0" /> to zero</li>
+<li>solution: replace <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=V_t" alt="V_t" title="V_t" /> with <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Cfrac%7BV_t%7D%7B1%20-%20%5Cbeta%5Et%7D" alt="\frac{V_t}{1 - \beta^t}" title="\frac{V_t}{1 - \beta^t}" /> (take into account the current time step)</li>
+<li>not often used in practice; people usually prefer waiting the exponentially weighted averaged to simply finish warming up</li>
+</ul>
+<h2 id="variations">Variations</h2>
+<h3 id="mini-batch-gd-with-momentum-smooth-out-the-steps-of-gradient-descent">Mini-batch GD with momentum: smooth out the steps of gradient descent</h3>
+<h4 id="implementation">Implementation</h4>
+<ul>
+<li><p>initialize</p>
+<ul>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=V_%7Bdw%7D%20%3D%200" alt="V_{dw} = 0" title="V_{dw} = 0" /></li>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=V_%7Bdb%7D%20%3D%200" alt="V_{db} = 0" title="V_{db} = 0" /></li>
+</ul></li>
+<li><p>compute <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=dw" alt="dw" title="dw" /> and <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=db" alt="db" title="db" /> for curent minibatch</p></li>
+<li><p>compute the exponentially weighted averages</p>
+<ul>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=V_%7Bdw%7D%20%3D%20%5Cbeta%20%5C%20%5Cast%20%5C%20V_%7Bdw%7D%20%2B%20%281%20-%20%5Cbeta%29%5C%20%5Cast%20%5C%20dw" alt="V_{dw} = \beta \ \ast \ V_{dw} + (1 - \beta)\ \ast \ dw" title="V_{dw} = \beta \ \ast \ V_{dw} + (1 - \beta)\ \ast \ dw" /></li>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=V_%7Bdb%7D%20%3D%20%5Cbeta%20%5C%20%5Cast%20%5C%20V_%7Bdb%7D%20%2B%20%281%20-%20%5Cbeta%29%5C%20%5Cast%20%5C%20db" alt="V_{db} = \beta \ \ast \ V_{db} + (1 - \beta)\ \ast \ db" title="V_{db} = \beta \ \ast \ V_{db} + (1 - \beta)\ \ast \ db" /></li>
+</ul></li>
+<li><p>update the weights</p>
+<p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=w%20%3D%20w%20-%20%5Calpha%20%5C%20%5Cast%20%5C%20V_%7Bdw%7D" alt="w = w - \alpha \ \ast \ V_{dw}" title="w = w - \alpha \ \ast \ V_{dw}" /></p>
+<p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=b%20%3D%20b%20-%20%5Calpha%20%5C%20%5Cast%20%5C%20V_%7Bdb%7D" alt="b = b - \alpha \ \ast \ V_{db}" title="b = b - \alpha \ \ast \ V_{db}" /></p></li>
+</ul>
+<h4 id="hyperparameters">Hyperparameters</h4>
+<ul>
+<li><p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Calpha" alt="\alpha" title="\alpha" />: needs to be tuned</p></li>
+<li><p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Cbeta%20%3D%200.9" alt="\beta = 0.9" title="\beta = 0.9" /> (average over ~ 10 gradients)</p></li>
+</ul>
+<h3 id="rmsprop-root-mean-squared-prop-can-also-speed-up-gradient-descent">RMSprop (Root Mean Squared prop): can also speed up gradient descent</h3>
+<h4 id="implementation-1">Implementation</h4>
+<ul>
+<li><p>initialize</p>
+<ul>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=S_%7Bdw%7D%20%3D%200" alt="S_{dw} = 0" title="S_{dw} = 0" /></li>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=S_%7Bdb%7D%20%3D%200" alt="S_{db} = 0" title="S_{db} = 0" /></li>
+</ul></li>
+<li><p>compute <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=dw" alt="dw" title="dw" /> and <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=db" alt="db" title="db" /> for curent minibatch</p></li>
+<li><p>compute the exponentially weighted averages</p>
+<ul>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=S_%7Bdw%7D%20%3D%20%5Cbeta%20%5C%20%5Cast%20%5C%20V_%7Bdw%7D%20%2B%20%281%20-%20%5Cbeta%29%20%5C%20%5Cast%20%5C%20dw%5E2" alt="S_{dw} = \beta \ \ast \ V_{dw} + (1 - \beta) \ \ast \ dw^2" title="S_{dw} = \beta \ \ast \ V_{dw} + (1 - \beta) \ \ast \ dw^2" /> (element-wise squaring operation)<br /></li>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=S_%7Bdb%7D%20%3D%20%5Cbeta%20%5C%20%5Cast%20%5C%20V_%7Bdb%7D%20%2B%20%281%20-%20%5Cbeta%29%20%5C%20%5Cast%20%5C%20db%5E2" alt="S_{db} = \beta \ \ast \ V_{db} + (1 - \beta) \ \ast \ db^2" title="S_{db} = \beta \ \ast \ V_{db} + (1 - \beta) \ \ast \ db^2" /> (element-wise squaring operation)</li>
+</ul></li>
+<li><p>update the weights</p>
+<ul>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=w%20%3D%20w%20-%20%5Calpha%20%5C%20%5Cast%20%5C%20%5Cfrac%7Bdw%7D%7B%5Csqrt%7BS_%7Bdw%7D%20%2B%20%5Cvarepsilon%7D%7D" alt="w = w - \alpha \ \ast \ \frac{dw}{\sqrt{S_{dw} + \varepsilon}}" title="w = w - \alpha \ \ast \ \frac{dw}{\sqrt{S_{dw} + \varepsilon}}" /></li>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=b%20%3D%20b%20-%20%5Calpha%20%5C%20%5Cast%20%5C%20%5Cfrac%7Bdb%7D%7B%5Csqrt%7BS_%7Bdb%7D%20%2B%20%5Cvarepsilon%7D%7D" alt="b = b - \alpha \ \ast \ \frac{db}{\sqrt{S_{db} + \varepsilon}}" title="b = b - \alpha \ \ast \ \frac{db}{\sqrt{S_{db} + \varepsilon}}" /></li>
+</ul></li>
+</ul>
+<h4 id="hyperparameters-1">Hyperparameters</h4>
+<ul>
+<li><p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Calpha" alt="\alpha" title="\alpha" />: needs to be tuned</p></li>
+<li><p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Cbeta%20%3D%200.999" alt="\beta = 0.999" title="\beta = 0.999" /></p></li>
+<li><p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Cvarepsilon%20%3D%201%5Cmathrm%7Be%7D-8" alt="\varepsilon = 1\mathrm{e}-8" title="\varepsilon = 1\mathrm{e}-8" /> (just to avoid zero-division errors)</p></li>
+</ul>
+<h3 id="adam-adaptive-moment-estimation-combines-momentum-with-rsmprop">ADAM (ADAptive Moment estimation): combines momentum with RSMprop</h3>
+<h4 id="implementation-2">Implementation</h4>
+<ul>
+<li><p>initialize</p>
+<ul>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=V_%7Bdw%7D%20%3D%200" alt="V_{dw} = 0" title="V_{dw} = 0" /></li>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=V_%7Bdb%7D%20%3D%200" alt="V_{db} = 0" title="V_{db} = 0" /></li>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=S_%7Bdw%7D%20%3D%200" alt="S_{dw} = 0" title="S_{dw} = 0" /></li>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=S_%7Bdb%7D%20%3D%200" alt="S_{db} = 0" title="S_{db} = 0" /></li>
+</ul></li>
+<li><p>compute <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=dw" alt="dw" title="dw" /> and <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=db" alt="db" title="db" /> for curent minibatch</p></li>
+<li><p>compute the exponentially weighted averages</p>
+<ul>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=V_%7Bdw%7D%20%3D%20%5Cbeta_1%20%5C%20%5Cast%20%5C%20V_%7Bdw%7D%20%2B%20%281%20-%20%5Cbeta_1%29%20%5C%20%5Cast%20%5C%20dw" alt="V_{dw} = \beta_1 \ \ast \ V_{dw} + (1 - \beta_1) \ \ast \ dw" title="V_{dw} = \beta_1 \ \ast \ V_{dw} + (1 - \beta_1) \ \ast \ dw" /><br /></li>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=V_%7Bdb%7D%20%3D%20%5Cbeta_1%20%5C%20%5Cast%20%5C%20V_%7Bdb%7D%20%2B%20%281%20-%20%5Cbeta_1%29%20%5C%20%5Cast%20%5C%20db" alt="V_{db} = \beta_1 \ \ast \ V_{db} + (1 - \beta_1) \ \ast \ db" title="V_{db} = \beta_1 \ \ast \ V_{db} + (1 - \beta_1) \ \ast \ db" /><br /></li>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=S_%7Bdw%7D%20%3D%20%5Cbeta_2%20%5C%20%5Cast%20%5C%20V_%7Bdw%7D%20%2B%20%281%20-%20%5Cbeta_2%29%20%5C%20%5Cast%20%5C%20dw%5E2" alt="S_{dw} = \beta_2 \ \ast \ V_{dw} + (1 - \beta_2) \ \ast \ dw^2" title="S_{dw} = \beta_2 \ \ast \ V_{dw} + (1 - \beta_2) \ \ast \ dw^2" /> (element-wise squaring operation)</li>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=S_%7Bdb%7D%20%3D%20%5Cbeta_2%20%5C%20%5Cast%20%5C%20V_%7Bdb%7D%20%2B%20%281%20-%20%5Cbeta_2%29%20%5C%20%5Cast%20%5C%20db%5E2" alt="S_{db} = \beta_2 \ \ast \ V_{db} + (1 - \beta_2) \ \ast \ db^2" title="S_{db} = \beta_2 \ \ast \ V_{db} + (1 - \beta_2) \ \ast \ db^2" /> (element-wise squaring operation)</li>
+</ul></li>
+<li><p>apply bias correction</p>
+<ul>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=V_%7Bdw%7D%5E%7Bcorrected%7D%20%3D%20%5Cfrac%7BV_%7Bdw%7D%7D%7B1%20-%20%5Cbeta_1%5E%7Bt%7D%7D" alt="V_{dw}^{corrected} = \frac{V_{dw}}{1 - \beta_1^{t}}" title="V_{dw}^{corrected} = \frac{V_{dw}}{1 - \beta_1^{t}}" /><br /></li>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=V_%7Bdb%7D%5E%7Bcorrected%7D%20%3D%20%5Cfrac%7BV_%7Bdb%7D%7D%7B1%20-%20%5Cbeta_1%5E%7Bt%7D%7D" alt="V_{db}^{corrected} = \frac{V_{db}}{1 - \beta_1^{t}}" title="V_{db}^{corrected} = \frac{V_{db}}{1 - \beta_1^{t}}" /><br /></li>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=S_%7Bdw%7D%5E%7Bcorrected%7D%20%3D%20%5Cfrac%7BS_%7Bdw%7D%7D%7B1%20-%20%5Cbeta_2%5E%7Bt%7D%7D" alt="S_{dw}^{corrected} = \frac{S_{dw}}{1 - \beta_2^{t}}" title="S_{dw}^{corrected} = \frac{S_{dw}}{1 - \beta_2^{t}}" /><br /></li>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=S_%7Bdb%7D%5E%7Bcorrected%7D%20%3D%20%5Cfrac%7BS_%7Bdb%7D%7D%7B1%20-%20%5Cbeta_2%5E%7Bt%7D%7D" alt="S_{db}^{corrected} = \frac{S_{db}}{1 - \beta_2^{t}}" title="S_{db}^{corrected} = \frac{S_{db}}{1 - \beta_2^{t}}" /></li>
+</ul></li>
+<li><p>update the weights</p>
+<ul>
+<li><p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=w%20%3D%20w%20-%20%5Calpha%20%5C%20%5Cast%20%5C%20%5Cfrac%7BV_%7Bdw%7D%5E%7Bcorrected%7D%7D%7B%5Csqrt%7BS_%7Bdw%7D%5E%7Bcorrected%7D%20%2B%20%5Cvarepsilon%7D%7D" alt="w = w - \alpha \ \ast \ \frac{V_{dw}^{corrected}}{\sqrt{S_{dw}^{corrected} + \varepsilon}}" title="w = w - \alpha \ \ast \ \frac{V_{dw}^{corrected}}{\sqrt{S_{dw}^{corrected} + \varepsilon}}" /></p></li>
+<li><p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=b%20%3D%20b%20-%20%5Calpha%20%5C%20%5Cast%20%5C%20%5Cfrac%7BV_%7Bdb%7D%5E%7Bcorrected%7D%7D%7B%5Csqrt%7BS_%7Bdb%7D%5E%7Bcorrected%7D%20%2B%20%5Cvarepsilon%7D%7D" alt="b = b - \alpha \ \ast \ \frac{V_{db}^{corrected}}{\sqrt{S_{db}^{corrected} + \varepsilon}}" title="b = b - \alpha \ \ast \ \frac{V_{db}^{corrected}}{\sqrt{S_{db}^{corrected} + \varepsilon}}" /></p></li>
+</ul></li>
+</ul>
+<h4 id="hyperparameters-2">Hyperparameters</h4>
+<ul>
+<li><p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Calpha" alt="\alpha" title="\alpha" />: needs to be tuned</p></li>
+<li><p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Cbeta_1%20%3D%200.9" alt="\beta_1 = 0.9" title="\beta_1 = 0.9" /></p></li>
+<li><p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Cbeta_2%20%3D%200.999" alt="\beta_2 = 0.999" title="\beta_2 = 0.999" /></p></li>
+<li><p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Cvarepsilon%20%3D%201%5Cmathrm%7Be%7D-8" alt="\varepsilon = 1\mathrm{e}-8" title="\varepsilon = 1\mathrm{e}-8" /> (just to avoid zero-division errors)</p></li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<h1 id="activation-functions-in-neural-networks">Activation functions in neural networks</h1>
+<h2 id="sigmoid-fx-frac11mathrme-x">Sigmoid <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=f%28x%29%20%3D%20%5Cfrac%7B1%7D%7B1%2B%5Cmathrm%7Be%7D%5E%7B-x%7D%7D" alt="f(x) = \frac{1}{1+\mathrm{e}^{-x}}" title="f(x) = \frac{1}{1+\mathrm{e}^{-x}}" /></h2>
+<p>Description</p>
+<ul>
+<li>squashes numbers to range [0, 1]<br /> high values near 1, high negative values near 0</li>
+<li>has a nice interpretation of saturating the &quot;firing rate&quot; of a neuron</li>
+</ul>
+<p>Problems</p>
+<ul>
+<li>saturated neurons &quot;kill&quot; the gradient<br /> high positive and high negative values generate ~0 gradients (flat slope)</li>
+<li>sigmoid outputs are not zero-centered (inneficient gradient updates)</li>
+<li>the exponential function is computationally expensive</li>
+</ul>
+<h2 id="tanh-fx-tanhx">Tanh <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=f%28x%29%20%3D%20tanh%28x%29" alt="f(x) = tanh(x)" title="f(x) = tanh(x)" /></h2>
+<p>Description</p>
+<ul>
+<li>squashes numbers to range [-1, 1]<br /> high values near 1, high negative values near -1</li>
+<li>outputs are zero-centered</li>
+</ul>
+<p>Problems</p>
+<ul>
+<li>saturated neurons &quot;kill&quot; the gradient</li>
+</ul>
+<h2 id="relu-rectified-linear-unit-fx-max0-x">ReLU (REctified Linear Unit) <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=f%28x%29%20%3D%20max%280%2C%20x%29" alt="f(x) = max(0, x)" title="f(x) = max(0, x)" /></h2>
+<p>Description</p>
+<ul>
+<li>does not saturate in the positive region</li>
+<li>very computationally efficient</li>
+<li>converges much faster than sigmoid/tanh in practice</li>
+</ul>
+<p>Problems</p>
+<ul>
+<li>not zero-centered output</li>
+<li>saturated neurons in the negative region</li>
+<li>dead ReLUs will never activate and therefore will never update</li>
+</ul>
+<h2 id="leaky-relu-fx-max0.1-x-x">Leaky ReLU <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=f%28x%29%20%3D%20max%280.1%20x%2C%20x%29" alt="f(x) = max(0.1 x, x)" title="f(x) = max(0.1 x, x)" /></h2>
+<p>Description</p>
+<ul>
+<li>does not saturate</li>
+<li>computationally efficien</li>
+<li>converges faster than sigmoid/tanh in practice</li>
+<li>will not die</li>
+</ul>
+</body>
+</html>
