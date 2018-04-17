@@ -12,18 +12,33 @@ A machine learning model transforms the input data into meaningful outputs, a pr
 
 Machine-learning problems fall into two camps: **supervised** and **unsupervised**.
 
-**Supervised** problems are the ones in which you have access to the target variable.
-Here, humans input data as well as the answers expected from the data, and the machine learning algorithm discovers the rules.
+**Supervised** problems are the ones in which you have access to the target variable.  
+Humans input the data and the answers expected from the data, and the machine learning algorithm discovers the rules.
 
-**Unsupervised** problems are ones in which there's no identified target variable.
-Here, the training process tries to find hidden structure in unlabaled data.
+**Unsupervised** problems are ones in which there's no identified target variable.  
+The training process tries to find hidden structure in unlabaled data.
 
 ## Use cases for supervised machine learning
 
-* **classification**: determine the discrete class to which each individual belongs; examples: spam filtering, fraud detection, detection of manufacturing defects
-* **regression**: predict the real-valued output for each individual; examples: stock-market prediction, demand forecasting, weather forecasting, sports prediction, price estimation, risk management
-* **recommendation**: predict which alternatives a user would prefer; examples: product recommendation, job recruiting, online dating, content recommendation
-* **imputation**: infer the values of missing input data; examples: incomplete patient medical records, missing customer data
+* **classification**: determine the discrete class to which each individual belongs; examples:
+    * spam filtering
+    * fraud detection
+    * detection of manufacturing defects
+* **regression**: predict the real-valued output for each individual; examples: 
+    * stock-market prediction
+    * demand forecasting
+    * weather forecasting
+    * sports prediction
+    * price estimation
+    * risk management
+* **recommendation**: predict which alternatives a user would prefer; examples: 
+    * product recommendation
+    * job recruiting
+    * online dating
+    * content recommendation
+* **imputation**: infer the values of missing input data; examples: 
+    * incomplete patient medical records
+    * missing customer data
 
 ## Use cases for unsupervised learning
 
