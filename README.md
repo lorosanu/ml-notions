@@ -4,17 +4,17 @@ This repository contains some terminology and descriptions of several aspects re
 
 ## Table of contents
 
-* [Machine learning](html/01_machine_learning.html)
+* [Machine learning](pdf/01_machine_learning.pdf)
 * [Popular algorithms]()
 * [Neural networks]()
-    * [Definitions](html/03_NN_definitions.html)
-    * [Activation functions](html/03_NN_activations.html)
+    * [Definitions](pdf/03_NN_definitions.pdf)
+    * [Activation functions](pdf/03_NN_activations.pdf)
     * [Optimization]()
-        * [Weight initialization](html/03_NN_optimization_initialization.html)
-        * [Dropout](html/03_NN_optimization_dropout.html)
-        * [Regularization](html/03_NN_optimization_regularization.html)
-        * [Gradient descent with momentum](html/03_NN_optimization_momentum.html)
-        * [Learning rate decay](html/03_NN_optimization_LRdecay.html)
+        * [Weight initialization](pdf/03_NN_optimization_initialization.pdf)
+        * [Dropout](pdf/03_NN_optimization_dropout.pdf)
+        * [Regularization](pdf/03_NN_optimization_regularization.pdf)
+        * [Gradient descent with momentum](pdf/03_NN_optimization_momentum.pdf)
+        * [Learning rate decay](pdf/03_NN_optimization_LRdecay.pdf)
 
 ## Sources
 
