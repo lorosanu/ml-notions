@@ -20,15 +20,15 @@ $\frac{1}{m} L(\hat{y}^{(i)}, y^{(i)}) \ + \ \lambda \ \ast \ R(w)$
 
 * $\lambda$: the regularization parameter
 
-## Variations
+# Variations
 
-### L1 regulatization
+## L1 regulatization
 
 Adds the absolute values of the model's coefficients as the penalty term.
 
 $R(w) = \frac{1}{m} \sum_{l=1}^{L} |w^{[l]}|$ 
 
-### L2 regulatization
+## L2 regulatization
 
 Adds the squared magnitude of the model's coefficients as the penalty term.
 
@@ -38,7 +38,7 @@ New formula for weight update
 
 $W^{[l]} = W^{[l]} \ - \ \alpha \ \ast \ dW^{[l]} = W^{[l]} - \alpha \ \ast \ (amount\ from\ backprob \ + \ \frac{\lambda}{m} W^{[l]}) $
 
-### Elastic net (L1 + L2)
+## Elastic net (L1 + L2)
 
 Adds both L1 and L2 penalities.
 

@@ -1,6 +1,6 @@
 # Gradient descent with momentum
 
-## Definition
+**Definition**
 
 * gradient descent with momentum is an optimization algorithm which relies on  
   computing the **exponentially weighted (moving) averages** of gradients  
@@ -8,23 +8,23 @@
 * build up "velocity" as a running mean of gradients  
 * step in the direction of the velocity over time
 
-## Why
+**Why**
 
 * move faster towards the minimum loss goal.
 
-## Formulation
+**Formulation**
 
-The computation of the exponentially weighted averages
+* The computation of the exponentially weighted averages
 
-* $V_{0} = 0$
-* ...
-* $V_{t} \ = \ \beta\ \ast \ V_{t-1} \ + \ (1 - \beta)\ \ast \ \theta_t$
+    * $V_{0} = 0$
+    * ...
+    * $V_{t} \ = \ \beta\ \ast \ V_{t-1} \ + \ (1 - \beta)\ \ast \ \theta_t$
 
-$V_t$ is approximately averaging over $\frac{1}{1 - \beta}$ previous data points
+* $V_t$ is approximately averaging over $\frac{1}{1 - \beta}$ previous data points
 
-* for $\beta=0.5$, $V_t$ is averaging over the last 2 values
-* for $\beta=0.9$, $V_t$ is averaging over the last 10 values
-* for $\beta=0.98$, $V_t$ is averaging over the last 50 values
+    * for $\beta=0.5$, $V_t$ is averaging over the last 2 values
+    * for $\beta=0.9$, $V_t$ is averaging over the last 10 values
+    * for $\beta=0.98$, $V_t$ is averaging over the last 50 values
 
 **Bias correction**
 
@@ -32,11 +32,11 @@ $V_t$ is approximately averaging over $\frac{1}{1 - \beta}$ previous data points
 * solution: replace $V_t$ with $\frac{V_t}{1 - \beta^t}$ (take into account the current time step)
 * not often used in practice; people usually prefer waiting the exponentially weighted averaged to simply finish warming up
 
-## Variations
+# Variations
 
-### Mini-batch GD with momentum: smooth out the steps of gradient descent
+## Mini-batch GD with momentum: smooth out the steps of gradient descent
 
-#### Implementation
+**Implementation**
 
 * initialize
 
@@ -56,15 +56,15 @@ $V_t$ is approximately averaging over $\frac{1}{1 - \beta}$ previous data points
 
     $b = b - \alpha \ \ast \ V_{db}$
 
-#### Hyperparameters
+**Hyperparameters**
     
 * $\alpha$: needs to be tuned
 
 * $\beta = 0.9$ (average over ~ 10 gradients)
 
-### RMSprop (Root Mean Squared prop): can also speed up gradient descent
+## RMSprop (Root Mean Squared prop): can also speed up gradient descent
 
-#### Implementation
+**Implementation**
 
 * initialize
 
@@ -83,7 +83,7 @@ $V_t$ is approximately averaging over $\frac{1}{1 - \beta}$ previous data points
     * $w = w - \alpha \ \ast \ \frac{dw}{\sqrt{S_{dw} + \varepsilon}}$
     * $b = b - \alpha \ \ast \ \frac{db}{\sqrt{S_{db} + \varepsilon}}$
 
-#### Hyperparameters
+**Hyperparameters**
     
 * $\alpha$: needs to be tuned
 
@@ -91,9 +91,9 @@ $V_t$ is approximately averaging over $\frac{1}{1 - \beta}$ previous data points
 
 * $\varepsilon = 1\mathrm{e}-8$ (just to avoid zero-division errors)
 
-### ADAM (ADAptive Moment estimation): combines momentum with RSMprop
+## ADAM (ADAptive Moment estimation): combines momentum with RSMprop
 
-#### Implementation
+**Implementation**
 
 * initialize 
 
@@ -124,7 +124,7 @@ $V_t$ is approximately averaging over $\frac{1}{1 - \beta}$ previous data points
     
     * $b = b - \alpha \ \ast \ \frac{V_{db}^{corrected}}{\sqrt{S_{db}^{corrected} + \varepsilon}}$
 
-#### Hyperparameters
+**Hyperparameters**
 
 * $\alpha$: needs to be tuned
 
