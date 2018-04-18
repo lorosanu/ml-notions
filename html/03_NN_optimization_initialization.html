@@ -6,12 +6,13 @@
   <meta name="generator" content="pandoc" />
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 </head>
 <body>
-<h1 id="weight-initialization">Weight initialization</h1>
-<h2 id="zero-initialization">Zero initialization</h2>
+<h1 id="weight-initialization"><span class="header-section-number">1</span> Weight initialization</h1>
+<h2 id="zero-initialization"><span class="header-section-number">1.1</span> Zero initialization</h2>
 <ul>
-<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=W%20%3D%200" alt="W = 0" title="W = 0" /></li>
+<li><span class="math">\(W = 0\)</span></li>
 <li>never used</li>
 <li>all neurons will react the same way
 <ul>
@@ -20,10 +21,10 @@
 <li>update in the same way</li>
 </ul></li>
 </ul>
-<h2 id="random-initialization">Random initialization</h2>
+<h2 id="random-initialization"><span class="header-section-number">1.2</span> Random initialization</h2>
 <ul>
-<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=W%20%3D%200.01%20%2A%20np.random.randn%28n%5E%7B%5Bl-1%5D%7D%2C%5C%20n%5E%7B%5Bl%5D%7D%29" alt="W = 0.01 * np.random.randn(n^{[l-1]},\ n^{[l]})" title="W = 0.01 * np.random.randn(n^{[l-1]},\ n^{[l]})" /></li>
-<li>small random numbers; gaussian with zero mean and <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=1%5Cmathrm%7Be%7D%5E%7B-2%7D" alt="1\mathrm{e}^{-2}" title="1\mathrm{e}^{-2}" /> standard deviation</li>
+<li><span class="math">\(W = 0.01 * np.random.randn(n^{[l-1]},\ n^{[l]})\)</span></li>
+<li>small random numbers; gaussian with zero mean and <span class="math">\(1\mathrm{e}^{-2}\)</span> standard deviation</li>
 <li>works okay for small networks</li>
 <li>problems with deeper networks
 <ul>
@@ -32,15 +33,15 @@
 <li>no update</li>
 </ul></li>
 </ul>
-<h2 id="xavier-initialization">Xavier initialization</h2>
+<h2 id="xavier-initialization"><span class="header-section-number">1.3</span> Xavier initialization</h2>
 <ul>
-<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=W%20%3D%20%5Cfrac%7Bnp.random.rand%28n%5E%7B%5Bl-1%5D%7D%2C%5C%20n%5E%7B%5Bl%5D%7D%29%7D%7Bnp.sqrt%28n%5E%7B%5Bl-1%5D%7D%29%7D" alt="W = \frac{np.random.rand(n^{[l-1]},\ n^{[l]})}{np.sqrt(n^{[l-1]})}" title="W = \frac{np.random.rand(n^{[l-1]},\ n^{[l]})}{np.sqrt(n^{[l-1]})}" /></li>
+<li><span class="math">\(W = \frac{np.random.rand(n^{[l-1]},\ n^{[l]})}{np.sqrt(n^{[l-1]})}\)</span></li>
 <li>works with tanh activation</li>
 <li>does not work well with ReLU activation</li>
 </ul>
-<h2 id="msra-initialization">MSRA initialization</h2>
+<h2 id="msra-initialization"><span class="header-section-number">1.4</span> MSRA initialization</h2>
 <ul>
-<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=W%20%3D%20%5Cfrac%7Bnp.random.rand%28n%5E%7B%5Bl-1%5D%7D%2C%5C%20n%5E%7B%5Bl%5D%7D%29%7D%7Bnp.sqrt%28%5Cfrac%7Bn%5E%7B%5Bl-1%5D%7D%7D%7B2%7D%29%7D" alt="W = \frac{np.random.rand(n^{[l-1]},\ n^{[l]})}{np.sqrt(\frac{n^{[l-1]}}{2})}" title="W = \frac{np.random.rand(n^{[l-1]},\ n^{[l]})}{np.sqrt(\frac{n^{[l-1]}}{2})}" /></li>
+<li><span class="math">\(W = \frac{np.random.rand(n^{[l-1]},\ n^{[l]})}{np.sqrt(\frac{n^{[l-1]}}{2})}\)</span></li>
 <li>works better with ReLU activation</li>
 </ul>
 </body>

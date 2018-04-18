@@ -6,13 +6,14 @@
   <meta name="generator" content="pandoc" />
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 </head>
 <body>
-<h1 id="definitions">Definitions</h1>
-<h2 id="gradient-descent">Gradient descent</h2>
+<h1 id="definitions"><span class="header-section-number">1</span> Definitions</h1>
+<h2 id="gradient-descent"><span class="header-section-number">1.1</span> Gradient descent</h2>
 <ul>
 <li>gradient descent is an iterative optimization algorithm used to minimize a function<br /> by iteratively moving in the direction of <em>steepest descent</em> as defined by the <em>negative of the gradient</em></li>
-<li>use gradient descent to update the parameters (weights <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=w" alt="w" title="w" />, <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=b" alt="b" title="b" />) of the model</li>
+<li>use gradient descent to update the parameters (weights <span class="math">\(w\)</span>, <span class="math">\(b\)</span>) of the model</li>
 <li>find the optimal weights that reduce the prediction error (minimize loss)</li>
 </ul>
 <p>Gradient descent algorithm</p>
@@ -23,22 +24,22 @@
 <li>step 4: use the new weights for prediction and to calculate the new error</li>
 <li>step 5: repeat steps 2 to 4 untill no significant error reduction</li>
 </ul>
-<h2 id="gradient-ascent">Gradient ascent</h2>
+<h2 id="gradient-ascent"><span class="header-section-number">1.2</span> Gradient ascent</h2>
 <p>The optimization alorithm that takes steps proportional to the <em>positive of the gradient</em>, thus approaching a local maximum of that function.</p>
-<h2 id="overfitting">Overfitting</h2>
+<h2 id="overfitting"><span class="header-section-number">1.3</span> Overfitting</h2>
 <ul>
 <li>when the model is trying too hard to capture the noise in the training dataset</li>
 <li>it models the training data too well</li>
 <li>it doesn't generalize well to new data</li>
 <li><em>solution</em>: use regulatization</li>
 </ul>
-<h2 id="underfitting">Underfitting</h2>
+<h2 id="underfitting"><span class="header-section-number">1.4</span> Underfitting</h2>
 <ul>
 <li>the model fails to correctly model the training data</li>
 <li>it also doesn't generalize to new data</li>
 <li><em>solution</em>: use a more complex model or a deeper model</li>
 </ul>
-<h2 id="bias-and-variance">Bias and variance</h2>
+<h2 id="bias-and-variance"><span class="header-section-number">1.5</span> Bias and variance</h2>
 <ul>
 <li>depends on the value of an optimal error for the task at hand, which is usually close to 0% (human performance)</li>
 <li>look at the <strong>error</strong> on the <em>train set</em> to determine if you have a <strong>bias problem</strong></li>
@@ -66,7 +67,7 @@
 <ul>
 <li>less of a trade-off between bias and variance in deep neural networks</li>
 </ul>
-<h2 id="vanishing-and-exploding-gradients">Vanishing and exploding gradients</h2>
+<h2 id="vanishing-and-exploding-gradients"><span class="header-section-number">1.6</span> Vanishing and exploding gradients</h2>
 <ul>
 <li>when training very deep neural networks the derivatives can end up either very very big or very very small, which makes training difficult</li>
 <li>the derivatives might increase exponentially or decrease exponentially as a function of <em>L</em> (number of layers), depending on the wights initial values</li>
