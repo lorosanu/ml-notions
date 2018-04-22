@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for file in `ls md/*.md`
+do
+  nfile=`basename $file .md`
+  pandoc $file -N -s --mathjax -o "html/${nfile}.html"
+done
