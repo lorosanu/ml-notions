@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+<body>
+<h1 id="linear-regression-for-regression"><span class="header-section-number">1</span> Linear regression (for regression)</h1>
+<p>Model a scalar target with one or more quantitative features.<br />Although regression computes a linear combination, features can be transformed by nonlinear functions if relationships are known or can be guessed.</p>
+<div class="figure">
+<img src="http://pgfplots.net/media/tikz/examples/PNG/regression-line.png" alt="Example of prediction using a linear regression model" /><p class="caption">Example of prediction using a linear regression model</p>
+</div>
+<h2 id="univariate-linear-regression"><span class="header-section-number">1.1</span> Univariate linear regression</h2>
+<ul>
+<li><p>Description</p>
+Simple linear regression is a statistical method that studies the relationship between two variables:
+<ul>
+<li><span class="math">\(x\)</span>: the predictor, explanatory, independent variable,</li>
+<li><span class="math">\(y\)</span>: the response, outcome, dependent variable.</li>
+</ul></li>
+<li><p>Model's hypothesis</p>
+<p><span class="math">\(h(x) = \theta_0 + \theta_1 \ast x = \hat{y}\)</span></p></li>
+<li>Model's parameters (# <span class="math">\(2\)</span>)
+<ul>
+<li><span class="math">\(\theta_0\)</span></li>
+<li><span class="math">\(\theta_1\)</span></li>
+</ul></li>
+<li><p>Cost function (in this case, the squared error function)</p>
+<p><span class="math">\(J(\theta_0, \theta_1) = \frac{1}{2m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right)^2\)</span></p></li>
+<li><p>Goal</p>
+<p><span class="math">\(minimize_{\theta_0, \theta_1} J(\theta_0, \theta_1)\)</span></p></li>
+<li><p>Algorithm</p>
+<ul>
+<li><p>gradient descent</p>
+<ul>
+<li>start with some initial values for <span class="math">\(\theta_0\)</span> and <span class="math">\(\theta_1\)</span> (usually zero)</li>
+<li><p>keep changing <span class="math">\(\theta_0\)</span> and <span class="math">\(\theta_1\)</span> to reduce <span class="math">\(J(\theta_0, \theta_1)\)</span></p>
+<ul>
+<li><p><span class="math">\(\theta_0 = \theta_0 - \alpha \frac{\partial}{\partial \theta_0} J(\theta_0, \theta_1) = \theta_0 - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \right)\)</span></p></li>
+<li><p><span class="math">\(\theta_1 = \theta_1 - \alpha \frac{\partial}{\partial \theta_1} J(\theta_0, \theta_1) = \theta_1 - \alpha \left(  \frac{1}{m} \sum_{i=1}^{m} \left(\hat{y}^{i} - y^{(i)} \right) \cdot x^{(i)}\right)\)</span></p></li>
+</ul></li>
+</ul></li>
+<li><p>directly use the <strong>formulas</strong> resulting from calculus</p>
+<ul>
+<li><p><span class="math">\(\theta_1 = \frac{\sum_{i=1}^{m} (x^{(i)} - \bar{x}) (y^{(i)} - \bar{y})}{\sum_{i=1}^{m} (x^{(i)} - \bar{x})^2}\)</span></p></li>
+<li><p><span class="math">\(\theta_0 = \bar{y} - \theta_1 \ast \bar(x)\)</span></p></li>
+</ul></li>
+</ul></li>
+<li><p>Notations</p>
+<ul>
+<li><span class="math">\(x\)</span>: the independent variable</li>
+<li><span class="math">\(y\)</span>: the dependent variable</li>
+<li><span class="math">\(m\)</span>: the number of training examples</li>
+<li><span class="math">\(x^{(i)}\)</span>: the input value of the <span class="math">\(i^{th}\)</span> training example</li>
+<li><span class="math">\(y^{(i)}\)</span>: the target value of the <span class="math">\(i^{th}\)</span> training example</li>
+<li><span class="math">\(\hat{y}^{(i)}\)</span>: the prediction made on the <span class="math">\(i^{th}\)</span> training example by the current hypothesis function</li>
+<li><span class="math">\(\alpha\)</span>: the learning rate; determines how big steps we take when updating the <span class="math">\(\theta\)</span> parameters</li>
+</ul></li>
+<li><p>Hyperparameters:</p>
+<ul>
+<li><span class="math">\(\alpha\)</span>: if too small, slow gradient descent; if too large, gradient descent may fail to converge</li>
+</ul></li>
+<li><p>Problems:</p>
+<ul>
+<li>gradient descent may converge to a local minimum</li>
+</ul></li>
+</ul>
+<h2 id="multivariate-linear-regression"><span class="header-section-number">1.2</span> Multivariate linear regression</h2>
+<ul>
+<li><p>Description</p>
+Multivariate linear regression is a statistical method that studies the relationship between multiple variables:
+<ul>
+<li><span class="math">\(n\)</span> variables <span class="math">\(x=\{x_1,x_2,...,x_n\}\)</span>: the predictor, explanatory, independent variables,</li>
+<li>one <span class="math">\(y\)</span> variable: the response, outcome, dependent variable.</li>
+</ul></li>
+<li><p>Model's hypothesis</p>
+<p><span class="math">\(h(x) = \theta_0 + \theta_1 \ast x_1  + \theta_2 \ast x_2 + ... + \theta_n \ast x_n = \hat{y}\)</span></p></li>
+<li><p>Model's parameters (# <span class="math">\(n+1\)</span>)</p>
+<p><span class="math">\(\theta=\{\theta_0, \theta_1, ..., \theta_n\}\)</span></p></li>
+<li><p>Cost function (in this case, the squared error function)</p>
+<p><span class="math">\(J(\theta) = \frac{1}{2m} \sum_{i=1}^{m} \left( \hat{y}^{(i)} - y^{(i)} \right)^2\)</span></p></li>
+<li><p>Goal</p>
+<p><span class="math">\(minimize_{\theta} J(\theta)\)</span></p></li>
+<li><p>Algorithm</p>
+<ul>
+<li><p>gradient descent</p>
+<ul>
+<li>start with some initial values for <span class="math">\(\theta_0\)</span>, <span class="math">\(\theta_1\)</span>, ..., <span class="math">\(\theta_n\)</span> (usually <span class="math">\(0\)</span>)</li>
+<li><p>keep changing <span class="math">\(\theta\)</span>s to reduce <span class="math">\(J(\theta)\)</span></p>
+<ul>
+<li><p><span class="math">\(\theta_0 = \theta_0 - \alpha \frac{\partial J}{\partial \theta_0} = \theta_0 - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \right)\)</span></p></li>
+<li><p><span class="math">\(\theta_1 = \theta_1 - \alpha \frac{\partial J}{\partial \theta_1} = \theta_1 - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_1^{(i)}\right)\)</span></p></li>
+<li><p>...</p></li>
+<li><p><span class="math">\(\theta_n = \theta_n - \alpha \frac{\partial J}{\partial \theta_n} = \theta_n - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_n^{(i)}\right)\)</span></p></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>Hyperparameters:</p>
+<ul>
+<li><span class="math">\(\alpha\)</span></li>
+</ul></li>
+<li><p>Notations</p>
+<ul>
+<li><span class="math">\(x\)</span>: the independent variables</li>
+<li><span class="math">\(y\)</span>: the dependent variable</li>
+<li><span class="math">\(m\)</span>: the number of training examples</li>
+<li><span class="math">\(n\)</span>: the number of features representing each training example</li>
+<li><span class="math">\(x^{(i)}\)</span>: the input values of the <span class="math">\(i^{th}\)</span> training example</li>
+<li><span class="math">\(x_j^{(i)}\)</span>: the value of the <span class="math">\(j^{th}\)</span> feature of the <span class="math">\(i^{th}\)</span> training example</li>
+<li><span class="math">\(y^{(i)}\)</span>: the target value of the <span class="math">\(i^{th}\)</span> training example</li>
+<li><span class="math">\(\hat{y}^{(i)}\)</span>: the prediction made on the <span class="math">\(i^{th}\)</span> training example by the current hypothesis function</li>
+<li><span class="math">\(\alpha\)</span>: the learning rate; determines how big steps we take when updating the <span class="math">\(\theta\)</span> parameters</li>
+</ul></li>
+</ul>
+</body>
+</html>
