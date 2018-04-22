@@ -5,7 +5,7 @@ This repository contains some terminology and descriptions of several aspects re
 ## Table of contents
 
 * [Machine learning](pdf/01_machine_learning.pdf)
-* [Popular algorithms]()
+* [Popular algorithms](pdf/02_popular_algorithms.pdf)
 * [Neural networks]()
     * [Definitions](pdf/03_NN_definitions.pdf)
     * [Activation functions](pdf/03_NN_activations.pdf)
