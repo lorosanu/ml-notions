@@ -40,11 +40,11 @@ Although regression computes a linear combination, features can be transformed b
 
             * $\theta_1 = \theta_1 - \alpha \frac{\partial}{\partial \theta_1} J(\theta_0, \theta_1) = \theta_1 - \alpha \left(  \frac{1}{m} \sum_{i=1}^{m} \left(\hat{y}^{i} - y^{(i)} \right) \cdot x^{(i)}\right)$
 
-    * directly use the **formulas** resulting from calculus
+    * directly use the following **formulas**
 
         * $\theta_1 = \frac{\sum_{i=1}^{m} (x^{(i)} - \bar{x}) (y^{(i)} - \bar{y})}{\sum_{i=1}^{m} (x^{(i)} - \bar{x})^2}$
 
-        * $\theta_0 = \bar{y} - \theta_1 \ast \bar(x)$
+        * $\theta_0 = \bar{y} - \theta_1 \bar{x}$
 
 * Notations
 
