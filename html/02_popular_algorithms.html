@@ -99,10 +99,6 @@ Multivariate linear regression is a statistical method that studies the relation
 </ul></li>
 </ul></li>
 </ul></li>
-<li><p>Hyperparameters:</p>
-<ul>
-<li><span class="math">\(\alpha\)</span></li>
-</ul></li>
 <li><p>Notations</p>
 <ul>
 <li><span class="math">\(x\)</span>: the independent variables</li>
@@ -114,6 +110,32 @@ Multivariate linear regression is a statistical method that studies the relation
 <li><span class="math">\(y^{(i)}\)</span>: the target value of the <span class="math">\(i^{th}\)</span> training example</li>
 <li><span class="math">\(\hat{y}^{(i)}\)</span>: the prediction made on the <span class="math">\(i^{th}\)</span> training example by the current hypothesis function</li>
 <li><span class="math">\(\alpha\)</span>: the learning rate; determines how big steps we take when updating the <span class="math">\(\theta\)</span> parameters</li>
+</ul></li>
+<li><p>Hyperparameters:</p>
+<ul>
+<li><span class="math">\(\alpha\)</span></li>
+</ul></li>
+<li><p>Problems:</p>
+<ul>
+<li><p>make sure features are on similar scales; gradient descent may be slow otherwise</p>
+<ul>
+<li><p>rescaling: <span class="math">\(x&#39; = \frac{x - min(x)}{max(x) - min(x)}\)</span></p></li>
+<li><p>mean normalization: <span class="math">\(x&#39; = \frac{x - mean(x)}{max(x) - min(x)}\)</span></p></li>
+<li><p>standardization: <span class="math">\(x&#39; = \frac{x - mean(x)}{std(x)}\)</span></p></li>
+</ul></li>
+<li><p>make sure the gradient descent is working correctly</p>
+<ul>
+<li>plot the value of the cost function <span class="math">\(J\)</span> over the number of iterations (# <span class="math">\(epochs\)</span>)</li>
+<li>for a sufficiently small <span class="math">\(\alpha\)</span>, <span class="math">\(J(\theta)\)</span> should decrease on every iteration</li>
+<li>if <span class="math">\(\alpha\)</span> is too small, the gradient descent can be slow to converge</li>
+<li>if <span class="math">\(\alpha\)</span> is too large, <span class="math">\(J(\theta)\)</span> may not decrease on every iteration; may not converge</li>
+<li>try values <span class="math">\(\alpha \in \{..., 0.001, 0.01, 0.1, 1, ...\}\)</span></li>
+</ul></li>
+<li><p>try adding new features if the model doesn't perform well</p>
+<ul>
+<li><p>e.g, use a polynomial regression</p>
+<p><span class="math">\(\theta_0 + \theta_1 \ast x \ \ \ \Rightarrow \ \ \ \theta_0 + \theta_1 \ast x + \theta_2 \ast x^2 + \theta_3 \ast x^3\)</span></p></li>
+</ul></li>
 </ul></li>
 </ul>
 </body>

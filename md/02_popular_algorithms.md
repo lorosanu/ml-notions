@@ -103,10 +103,6 @@ Although regression computes a linear combination, features can be transformed b
 
             * $\theta_n = \theta_n - \alpha \frac{\partial J}{\partial \theta_n} = \theta_n - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_n^{(i)}\right)$
 
-* Hyperparameters:
-
-    * $\alpha$
-
 * Notations
 
     * $x$: the independent variables
@@ -118,3 +114,31 @@ Although regression computes a linear combination, features can be transformed b
     * $y^{(i)}$: the target value of the $i^{th}$ training example
     * $\hat{y}^{(i)}$: the prediction made on the $i^{th}$ training example by the current hypothesis function 
     * $\alpha$: the learning rate; determines how big steps we take when updating the $\theta$ parameters
+
+* Hyperparameters:
+
+    * $\alpha$
+
+* Problems:
+
+    * make sure features are on similar scales; gradient descent may be slow otherwise
+
+        * rescaling: $x' = \frac{x - min(x)}{max(x) - min(x)}$
+
+        * mean normalization: $x' = \frac{x - mean(x)}{max(x) - min(x)}$
+
+        * standardization: $x' = \frac{x - mean(x)}{std(x)}$
+
+    * make sure the gradient descent is working correctly
+
+        * plot the value of the cost function $J$ over the number of iterations (# $epochs$) 
+        * for a sufficiently small $\alpha$, $J(\theta)$ should decrease on every iteration
+        * if $\alpha$ is too small, the gradient descent can be slow to converge
+        * if $\alpha$ is too large, $J(\theta)$ may not decrease on every iteration; may not converge
+        * try values $\alpha \in \{..., 0.001, 0.01, 0.1, 1, ...\}$
+
+    * try adding new features if the model doesn't perform well
+
+        * e.g, use a polynomial regression 
+
+            $\theta_0 + \theta_1 \ast x \ \ \ \Rightarrow \ \ \ \theta_0 + \theta_1 \ast x + \theta_2 \ast x^2 + \theta_3 \ast x^3$
