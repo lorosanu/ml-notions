@@ -137,22 +137,35 @@ Although regression computes a linear combination, features can be transformed b
         * if $\alpha$ is too large, $J(\theta)$ may not decrease on every iteration; may not converge
         * try values $\alpha \in \{..., 0.001, 0.01, 0.1, 1, ...\}$
 
-    * try adding new features if the model doesn't perform well
+    * in case of **underfitting**
 
-        * e.g, use a polynomial regression 
+        * try adding new features
 
-            $\theta_0 + \theta_1 \ast x \ \ \ \Rightarrow \ \ \ \theta_0 + \theta_1 \ast x + \theta_2 \ast x^2 + \theta_3 \ast x^3$
+            * e.g, use a polynomial regression
 
-    * use regularization in case of overfitting
+                $\theta_0 + \theta_1 \ast x \ \ \ \Rightarrow \ \ \ \theta_0 + \theta_1 \ast x + \theta_2 \ast x^2 + \theta_3 \ast x^3$
 
-        * cost function with the regularization term
+    * in case of **overfitting**
 
-            $J(\theta) = \frac{1}{2m} \sum_{i=1}^{m} \left( \hat{y}^{(i)} - y^{(i)} \right)^2 + \frac{\lambda}{2m} \sum_{j=1}^{n} \theta_j^2$
+        * reduce the number of features
 
-        * parameter update in gradient descent (for $j \in \{1, 2, ..., n\}$)
+            * manually select which features to keep
+            * use a model-selection algorithm
 
-            $\theta_j = \theta_j - \alpha \frac{\partial J}{\partial \theta_j} = \theta_j - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)} + \frac{\lambda}{m} \theta_j \right) = \theta_j \left( 1 - \alpha \frac{\lambda}{m} \right) - \alpha \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)}$
+        * use regularization
 
-        * intuition: *shrink* model parameters in order to *smooth out* the decision boundary
+            * keep all the features, but reduce the magnitude of parameters $\theta$;  
+              works well when working with a lot of features, each of which contributes a bit to predicting $y$
 
-        * $\lambda$ is the regularization parameter and needs to be tuned
+            * intuition: *shrink* model parameters in order to *smooth out* the decision boundary (generate a *simpler* hypothesis)
+
+            * cost function with the *regularization term*
+
+                $J(\theta) = \frac{1}{2m} \sum_{i=1}^{m} \left( \hat{y}^{(i)} - y^{(i)} \right)^2 + \frac{\lambda}{2m} \sum_{j=1}^{n} \theta_j^2$
+
+            * parameter update in gradient descent (for $j \in \{1, 2, ..., n\}$)
+
+                $\theta_j = \theta_j - \alpha \frac{\partial J}{\partial \theta_j} = \theta_j - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)} + \frac{\lambda}{m} \theta_j \right) = \theta_j \left( 1 - \alpha \frac{\lambda}{m} \right) - \alpha \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)}$
+
+            * $\lambda$ is the *regularization parameter* and needs to be tuned;  
+              it controls the trade-off between the goal of fitting the training data well and the goal of keeping the parameters small

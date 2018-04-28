@@ -73,21 +73,38 @@ Predict target class or probabilities of target classes.
 
     * make sure the gradient descent is working correctly
 
-    * try adding new features if the model doesn't perform well
+    * in case of **underfitting**
 
-    * also use regularization in case of overfitting
+        * try adding new features
 
-        * cost function with the regularization term
+            * e.g, use a polynomial regression
 
-            $J(\theta) = \frac{1}{m} \sum_{i=1}^{m} \left( -y^{(i)}\ log\ \hat{y}^{(i)} - (1 - y^{(i)})\ log\ (1 - \hat{y}^{(i)}) \right) + \frac{\lambda}{2m} \sum_{j=1}^{n} \theta_j^2$
+                $\theta_0 + \theta_1 \ast x \ \ \ \Rightarrow \ \ \ \theta_0 + \theta_1 \ast x + \theta_2 \ast x^2 + \theta_3 \ast x^3$
 
-        * parameter update in gradient descent (for $j \in \{1, 2, ..., n\}$)
+    * in case of **overfitting**
 
-            $\theta_j = \theta_j - \alpha \frac{\partial J}{\partial \theta_j} = \theta_j - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)} + \frac{\lambda}{m} \theta_j \right) = \theta_j \left( 1 - \alpha \frac{\lambda}{m} \right) - \alpha \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)}$
+        * reduce the number of features
 
-        * intuition: *shrink* model parameters in order to *smooth out* the decision boundary
+            * manually select which features to keep
+            * use a model-selection algorithm
 
-        * $\lambda$ is the regularization parameter and needs to be tuned
+        * use regularization
+
+            * keep all the features, but reduce the magnitude of parameters $\theta$;  
+              works well when working with a lot of features, each of which contributes a bit to predicting $y$
+
+            * intuition: *shrink* model parameters in order to *smooth out* the decision boundary (generate a *simpler* hypothesis)
+
+            * cost function with the regularization term
+
+                $J(\theta) = \frac{1}{m} \sum_{i=1}^{m} \left( -y^{(i)}\ log\ \hat{y}^{(i)} - (1 - y^{(i)})\ log\ (1 - \hat{y}^{(i)}) \right) + \frac{\lambda}{2m} \sum_{j=1}^{n} \theta_j^2$
+
+            * parameter update in gradient descent (for $j \in \{1, 2, ..., n\}$)
+
+                $\theta_j = \theta_j - \alpha \frac{\partial J}{\partial \theta_j} = \theta_j - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)} + \frac{\lambda}{m} \theta_j \right) = \theta_j \left( 1 - \alpha \frac{\lambda}{m} \right) - \alpha \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)}$
+
+            * $\lambda$ is the *regularization parameter* and needs to be tuned;  
+              it controls the trade-off between the goal of fitting the training data well and the goal of keeping the parameters small
 
 ## Multiclass classification
 
