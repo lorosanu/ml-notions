@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+<body>
+<h1 id="logistic-regression-for-classification"><span class="header-section-number">1</span> Logistic regression (for classification)</h1>
+<p>Categorize observations based on quantitative features. Predict target class or probabilities of target classes.</p>
+<div class="figure">
+<img src="https://qph.ec.quoracdn.net/main-qimg-a19746bfc7afdfa6d9d0cbaf3f48af88" alt="Example of a binary classification using a logictic regression model" /><p class="caption">Example of a binary classification using a logictic regression model</p>
+</div>
+<h2 id="binary-classification"><span class="header-section-number">1.1</span> Binary classification</h2>
+<ul>
+<li><p>Description</p>
+Logistic regression is a statistical method that studies the relationship between multiple variables:
+<ul>
+<li><span class="math">\(n\)</span> variables <span class="math">\(x=\{x_1,x_2,...,x_n\}\)</span>: the predictor, explanatory, independent variables,</li>
+<li>one <span class="math">\(y\)</span> variable: the response, outcome, dependent variable.</li>
+</ul>
+Logistic regression expands the linear regression model with a <em>logistic function</em> to make it suitable for classification.<br />Its dependent variable is therefore categorical instead of numerical.<br />In case of a binary classification task, its dependent variable takes on one out of two possible values
+<ul>
+<li><span class="math">\(y \in \{0, 1\}\)</span></li>
+<li><span class="math">\(0\)</span> indicates the <em>negative</em> class</li>
+<li><span class="math">\(1\)</span> indicates the <em>positive</em> class</li>
+</ul></li>
+<li><p>Model's hypothesis: output the estimated probability that <span class="math">\(y=1\)</span> on input x</p>
+<ul>
+<li><p><span class="math">\(z = \theta_0 + \theta_1 \ast x_1  + \theta_2 \ast x_2 + ... + \theta_n \ast x_n\)</span></p></li>
+<li><p><span class="math">\(h(x) = P(y=1|x, \theta) = \sigma(z) = \frac{1}{1 + \mathrm{e}^{-z}} = \hat{y}\ \ \ \)</span> (<span class="math">\(0 &lt;= h(x) &lt;= 1\)</span>)</p></li>
+</ul></li>
+<li><p>Model's parameters (# <span class="math">\(n+1\)</span>)</p>
+<p><span class="math">\(\theta=\{\theta_0, \theta_1, ..., \theta_n\}\)</span></p></li>
+<li><p>Decision boundary</p>
+<ul>
+<li><p>linear</p></li>
+<li><p>non-linear when adding extra higher-order polynomial terms to the features</p></li>
+</ul></li>
+<li><p>Cost function</p>
+<p><span class="math">\(J(\theta) = \frac{1}{m} \sum_{i=1}^{m} \left( -y^{(i)}\ log\ \hat{y}^{(i)} - (1 - y^{(i)})\ log\ (1 - \hat{y}^{(i)}) \right)\)</span></p>
+in other words
+<ul>
+<li><span class="math">\(J(\theta) = \frac{1}{m} \sum_{i=1}^{m} \left( -\ log\ \hat{y}^{(i)} \right)\)</span> when <span class="math">\(y^{(i)}=1\)</span></li>
+<li><span class="math">\(J(\theta) = \frac{1}{m} \sum_{i=1}^{m} \left( -\ log\ (1 - \hat{y}^{(i)}) \right)\)</span> when <span class="math">\(y^{(i)}=0\)</span></li>
+</ul></li>
+<li><p>Goal</p>
+<p><span class="math">\(minimize_{\theta} J(\theta)\)</span></p></li>
+<li><p>Algorithm</p>
+<ul>
+<li><p>gradient descent</p>
+<ul>
+<li>start with some initial values for <span class="math">\(\theta_0\)</span>, <span class="math">\(\theta_1\)</span>, ..., <span class="math">\(\theta_n\)</span> (usually normal random values)</li>
+<li><p>keep changing <span class="math">\(\theta\)</span>s to reduce <span class="math">\(J(\theta)\)</span></p>
+<ul>
+<li><p><span class="math">\(\theta_0 = \theta_0 - \alpha \frac{\partial J}{\partial \theta_0} = \theta_0 - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \right)\)</span></p></li>
+<li><p><span class="math">\(\theta_1 = \theta_1 - \alpha \frac{\partial J}{\partial \theta_1} = \theta_1 - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_1^{(i)}\right)\)</span></p></li>
+<li><p>...</p></li>
+<li><p><span class="math">\(\theta_n = \theta_n - \alpha \frac{\partial J}{\partial \theta_n} = \theta_n - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_n^{(i)}\right)\)</span></p></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>Hyperparameters:</p>
+<ul>
+<li><span class="math">\(\alpha\)</span></li>
+</ul></li>
+<li><p>Problems:</p>
+<ul>
+<li><p>the idea of feature scaling also aplied for logistic regression</p></li>
+<li><p>make sure the gradient descent is working correctly</p></li>
+<li><p>try adding new features if the model doesn't perform well</p></li>
+<li><p>also use regularization in case of overfitting</p>
+<ul>
+<li><p>cost function with the regularization term</p>
+<p><span class="math">\(J(\theta) = \frac{1}{m} \sum_{i=1}^{m} \left( -y^{(i)}\ log\ \hat{y}^{(i)} - (1 - y^{(i)})\ log\ (1 - \hat{y}^{(i)}) \right) + \frac{\lambda}{2m} \sum_{j=1}^{n} \theta_j^2\)</span></p></li>
+<li><p>parameter update in gradient descent (for <span class="math">\(j \in \{1, 2, ..., n\}\)</span>)</p>
+<p><span class="math">\(\theta_j = \theta_j - \alpha \frac{\partial J}{\partial \theta_j} = \theta_j - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)} + \frac{\lambda}{m} \theta_j \right) = \theta_j \left( 1 - \alpha \frac{\lambda}{m} \right) - \alpha \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)}\)</span></p></li>
+<li><p>intuition: <em>shrink</em> model parameters in order to <em>smooth out</em> the decision boundary</p></li>
+<li><p><span class="math">\(\lambda\)</span> is the regularization parameter and needs to be tuned</p></li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="multiclass-classification"><span class="header-section-number">1.2</span> Multiclass classification</h2>
+<ul>
+<li><p>Description</p>
+<ul>
+<li>use the one-vs-all (one-vs-rest) approach</li>
+<li>turn the problem into <span class="math">\(C\)</span> binary classification problems (generate <span class="math">\(C\)</span> decision boundaries)</li>
+<li>formally: train a logistic regression classifier <span class="math">\(h^{(i)}(x)\)</span> for each class <span class="math">\(i\)</span> to predict the probability that <span class="math">\(y=i\)</span></li>
+<li>on a new input <span class="math">\(x\)</span>, in order to make a prediction pick the class <span class="math">\(i\)</span> that maximizes <span class="math">\(max_i h^{(i)}(x)\)</span></li>
+</ul></li>
+</ul>
+</body>
+</html>

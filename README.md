@@ -5,11 +5,18 @@ This repository contains some terminology and descriptions of several aspects re
 ## Table of contents
 
 * [Machine learning](pdf/01_machine_learning.pdf)
-* [Popular algorithms](pdf/02_popular_algorithms.pdf)
-* [Neural networks]()
+* Popular algorithms
+    * [Linear Regression](pdf/02-01_linear-regression.pdf)
+    * [Logistic Regression](pdf/02-02_logistic-regression.pdf)
+    * Naive Basyes
+    * Neural Networks
+    * Decision Trees
+    * Support vector machines
+    * Clustering
+* More on neural networks
     * [Definitions](pdf/03_NN_definitions.pdf)
     * [Activation functions](pdf/03_NN_activations.pdf)
-    * [Optimization]()
+    * Optimization
         * [Weight initialization](pdf/03_NN_optimization_initialization.pdf)
         * [Dropout](pdf/03_NN_optimization_dropout.pdf)
         * [Regularization](pdf/03_NN_optimization_regularization.pdf)
