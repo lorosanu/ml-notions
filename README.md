@@ -8,7 +8,7 @@ This repository contains some terminology and descriptions of several aspects re
 * Popular algorithms
     * [Linear Regression](pdf/02-01_linear-regression.pdf)
     * [Logistic Regression](pdf/02-02_logistic-regression.pdf)
-    * Naive Basyes
+    * Naive Bayes
     * Neural Networks
     * Decision Trees
     * Support vector machines
