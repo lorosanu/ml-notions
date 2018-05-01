@@ -9,7 +9,7 @@ This repository contains some terminology and descriptions of several aspects re
     * [Linear Regression](pdf/02-01_linear-regression.pdf)
     * [Logistic Regression](pdf/02-02_logistic-regression.pdf)
     * [Naive Bayes](pdf/02-03_naive-bayes.pdf)
-    * Neural Networks
+    * [Neural Networks](pdf/02-04_neural-networks.pdf)
     * Decision Trees
     * Support vector machines
     * Clustering
@@ -27,6 +27,8 @@ This repository contains some terminology and descriptions of several aspects re
 
 * Books
     * [Real-world machine learning](https://www.manning.com/books/real-world-machine-learning), H.Brink, J. W. Richards, M. Fetherolf, Manning Publications, 2016
+    * [Machine learning: the art and science of algorithms that make sense of data](http://www.cs.put.poznan.pl/tpawlak/files/ZMIO/W02.pdf), Peter Flach, Cambridge University Press, 2012
+    * [Neural networks and deep learning](http://neuralnetworksanddeeplearning.com/), Michael A. Nielsen, Determination Press, 2015
     * [Deep learning with python](https://www.manning.com/books/deep-learning-with-python), F. Chollet, Manning Publications, 2017
 * Videos
     * [Machine learning by Andrew Ng](https://www.youtube.com/playlist?list=PLLssT5z_DsK-h9vYZkQkYNWcItqhlRJLN)
