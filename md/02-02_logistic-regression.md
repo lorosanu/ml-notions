@@ -1,9 +1,9 @@
 # Logistic regression (for classification)
 
-Categorize observations based on quantitative features.
+Categorize observations based on quantitative features.  
 Predict target class or probabilities of target classes.
 
-![Example of a binary classification using a logictic regression model](https://qph.ec.quoracdn.net/main-qimg-a19746bfc7afdfa6d9d0cbaf3f48af88)
+![](../images/logistic_regression.png)
 
 ## Binary classification
 
@@ -63,11 +63,11 @@ Predict target class or probabilities of target classes.
 
             * $\theta_n = \theta_n - \alpha \frac{\partial J}{\partial \theta_n} = \theta_n - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_n^{(i)}\right)$
 
-* Hyperparameters:
+* Hyperparameters
 
     * $\alpha$
 
-* Problems:
+* Problems
 
     * the idea of feature scaling also aplied for logistic regression
 
@@ -105,6 +105,24 @@ Predict target class or probabilities of target classes.
 
             * $\lambda$ is the *regularization parameter* and needs to be tuned;  
               it controls the trade-off between the goal of fitting the training data well and the goal of keeping the parameters small
+
+* Evaluation metrics
+
+    * accuracy: out of all predictions, how many of them were correct
+    * precision: out of all *positive* predictions, how many of them were actually *positive* examples
+    * recall: out of all positive examples, how many of them were detected as positive
+    * f1-score: harmonic mean between precision and recall
+
+* Trading off precision and recall
+
+    * use a different threshold for making decisions whether the class is positive or negative
+    * minimize the number of false positives
+        * generate a higher precision, but a lower recall
+        * choose a higher threshold (e.g. $\sigma=\{0.7, ..., 0.9\}$)
+    * minimize the number of false negatives
+        * generate a higher recall, but a lower precision
+        * choose a lower threshold (e.g. $\sigma=\{0.1, ..., 0.3\}$)
+    * plot the precision-recall tradeoff curve by testing various threshold values between $[0, 1]$
 
 ## Multiclass classification
 

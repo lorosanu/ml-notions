@@ -10,9 +10,9 @@
 </head>
 <body>
 <h1 id="logistic-regression-for-classification"><span class="header-section-number">1</span> Logistic regression (for classification)</h1>
-<p>Categorize observations based on quantitative features. Predict target class or probabilities of target classes.</p>
+<p>Categorize observations based on quantitative features.<br />Predict target class or probabilities of target classes.</p>
 <div class="figure">
-<img src="https://qph.ec.quoracdn.net/main-qimg-a19746bfc7afdfa6d9d0cbaf3f48af88" alt="Example of a binary classification using a logictic regression model" /><p class="caption">Example of a binary classification using a logictic regression model</p>
+<img src="../images/logistic_regression.png" />
 </div>
 <h2 id="binary-classification"><span class="header-section-number">1.1</span> Binary classification</h2>
 <ul>
@@ -63,11 +63,11 @@ in other words
 </ul></li>
 </ul></li>
 </ul></li>
-<li><p>Hyperparameters:</p>
+<li><p>Hyperparameters</p>
 <ul>
 <li><span class="math">\(\alpha\)</span></li>
 </ul></li>
-<li><p>Problems:</p>
+<li><p>Problems</p>
 <ul>
 <li><p>the idea of feature scaling also aplied for logistic regression</p></li>
 <li><p>make sure the gradient descent is working correctly</p></li>
@@ -97,6 +97,28 @@ in other words
 <li><p><span class="math">\(\lambda\)</span> is the <em>regularization parameter</em> and needs to be tuned;<br /> it controls the trade-off between the goal of fitting the training data well and the goal of keeping the parameters small</p></li>
 </ul></li>
 </ul></li>
+</ul></li>
+<li><p>Evaluation metrics</p>
+<ul>
+<li>accuracy: out of all predictions, how many of them were correct</li>
+<li>precision: out of all <em>positive</em> predictions, how many of them were actually <em>positive</em> examples</li>
+<li>recall: out of all positive examples, how many of them were detected as positive</li>
+<li>f1-score: harmonic mean between precision and recall</li>
+</ul></li>
+<li><p>Trading off precision and recall</p>
+<ul>
+<li>use a different threshold for making decisions whether the class is positive or negative</li>
+<li>minimize the number of false positives
+<ul>
+<li>generate a higher precision, but a lower recall</li>
+<li>choose a higher threshold (e.g. <span class="math">\(\sigma=\{0.7, ..., 0.9\}\)</span>)</li>
+</ul></li>
+<li>minimize the number of false negatives
+<ul>
+<li>generate a higher recall, but a lower precision</li>
+<li>choose a lower threshold (e.g. <span class="math">\(\sigma=\{0.1, ..., 0.3\}\)</span>)</li>
+</ul></li>
+<li>plot the precision-recall tradeoff curve by testing various threshold values between <span class="math">\([0, 1]\)</span></li>
 </ul></li>
 </ul>
 <h2 id="multiclass-classification"><span class="header-section-number">1.2</span> Multiclass classification</h2>
