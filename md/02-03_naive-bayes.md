@@ -2,7 +2,7 @@
 
 Naive Bayes classifiers are a family of simple probabilistic classifiers based on applying Bayes' theorem with strong, naive *independence assumptions* between the features.
 
-The different naive Bayes classifiers differ mainly by the assumptions they make regarding the distribution of features.
+The different naive Bayes classifiers differ mainly by the assumptions they make regarding the distribution of features. They are simple, scalable classification algorithms used especially in text classification tasks.
 
 It uses the concept of *probability* to clasify new instances.
 
