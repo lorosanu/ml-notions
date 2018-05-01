@@ -3,7 +3,7 @@
 Model a scalar target with one or more quantitative features.  
 Although regression computes a linear combination, features can be transformed by nonlinear functions if relationships are known or can be guessed.
 
-![Example of prediction using a linear regression model](http://pgfplots.net/media/tikz/examples/PNG/regression-line.png)
+![](../images/linear_regression.png)
 
 ## Univariate linear regression
 
@@ -18,8 +18,7 @@ Although regression computes a linear combination, features can be transformed b
     $h(x) = \theta_0 + \theta_1 \ast x = \hat{y}$
 
 * Model's parameters (# $2$)
-    * $\theta_0$
-    * $\theta_1$
+    * $\theta_0$, $\theta_1$
 
 * Cost function (in this case, the squared error function)
 
@@ -129,6 +128,8 @@ Although regression computes a linear combination, features can be transformed b
 
         * standardization: $x' = \frac{x - mean(x)}{std(x)}$
 
+        ![](../images/normalizing_inputs.png)
+
     * make sure the gradient descent is working correctly
 
         * plot the value of the cost function $J$ over the number of iterations (# $epochs$) 
@@ -147,10 +148,16 @@ Although regression computes a linear combination, features can be transformed b
 
     * in case of **overfitting**
 
-        * reduce the number of features
+        * get more training examples
+
+        * try reducing the number of features
 
             * manually select which features to keep
             * use a model-selection algorithm
+
+        * try getting additional features
+
+        * try adding polynomial features
 
         * use regularization
 
@@ -169,3 +176,5 @@ Although regression computes a linear combination, features can be transformed b
 
             * $\lambda$ is the *regularization parameter* and needs to be tuned;  
               it controls the trade-off between the goal of fitting the training data well and the goal of keeping the parameters small
+
+        * when using regularization, try increasing or decreasing $\lambda$
