@@ -6,6 +6,7 @@
   <meta name="generator" content="pandoc" />
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 </head>
 <body>
 <h1 id="machine-learning"><span class="header-section-number">1</span> Machine learning</h1>
@@ -51,13 +52,99 @@
 <li><strong>clustering</strong>: use the input features to discover natural groupings in the data and to divide the data into those groups; methods: k-means, Gaussian mixture models, hierarchical clustering</li>
 <li><strong>dimensionality reduction</strong>: transform the input features into a small number of coordinates that capture most of the variability of the data; methods: principal component analysis, multidimensional scaling, manifold learning</li>
 </ul>
-<h2 id="machine-learning-workflow"><span class="header-section-number">1.4</span> Machine learning workflow</h2>
+<h2 id="more-on-supervised-learning"><span class="header-section-number">1.4</span> More on supervised learning</h2>
+<h3 id="machine-learning-workflow"><span class="header-section-number">1.4.1</span> Machine learning workflow</h3>
 <ul>
 <li>data preparation</li>
 <li>model building</li>
 <li>evaluation</li>
 <li>optimization</li>
 <li>prediction</li>
+</ul>
+<h3 id="model-selection"><span class="header-section-number">1.4.2</span> Model selection</h3>
+<ul>
+<li>data division
+<ul>
+<li>60% train set: for training the model</li>
+<li>20% dev (cross validation) set: for tuning hyper-parameters</li>
+<li>20% test set: for prediction evaluation</li>
+</ul></li>
+</ul>
+<h3 id="bias-and-variance"><span class="header-section-number">1.4.3</span> Bias and variance</h3>
+<p><img src="../images/bias-variance-1.png" /> <span class="math">\(\qquad\)</span> <img src="../images/bias-variance-2.png" /></p>
+<ul>
+<li>depends on the value of an optimal error for the task at hand, which is usually close to 0% (human performance)</li>
+<li>look at the <strong>error</strong> on the <em>train set</em> to determine if you have a <strong>bias problem</strong></li>
+<li>look at the <strong>error difference</strong> between the <em>train set</em> and the <em>test set</em> to determine if you have a <strong>variance problem</strong></li>
+<li><strong>high bias</strong> (<em>underfitting</em>): large train set and test set error, but similar train/test performance</li>
+<li><strong>high variance</strong> (<em>overfitting</em>): small train set error, but large test set error</li>
+<li>high bias and high variance (<em>underfitting</em> and <em>partially overfitting</em>): large train set error, but even larger test set error</li>
+<li>low bias and low variance (model seems correct): low train set and test set error</li>
+<li>plot the <em>learning curves</em> to check if you have an underfitting or an overfitting problem
+<ul>
+<li>check the error on the train set and on the test set as you increase the size of your train set</li>
+</ul>
+<img src="../images/bias-variance-4.png" /> <span class="math">\(\qquad\)</span> <img src="../images/bias-variance-5.png" /></li>
+</ul>
+<h3 id="bias-and-variance-when-using-regularization"><span class="header-section-number">1.4.4</span> Bias and variance when using regularization</h3>
+<div class="figure">
+<img src="../images/bias-variance-3.png" />
+</div>
+<ul>
+<li>bad values of the <em>regularization term</em> (<span class="math">\(\lambda\)</span>) can drive the model to underfit or to overfit the data</li>
+<li>a <strong>high</strong> <span class="math">\(\lambda\)</span> penalizes too much the model parameters <span class="math">\(\Rightarrow\)</span> <strong>underfitting</strong></li>
+<li>an intermediate <span class="math">\(\lambda\)</span> penalizes just enough the model parameters</li>
+<li>a <strong>low</strong> <span class="math">\(\lambda\)</span> doesn't penalize enough the model parameters <span class="math">\(\Rightarrow\)</span> <strong>overfitting</strong></li>
+<li>try various values of <span class="math">\(\lambda = \{0, 0.1, 0.2, 0.3, ..., 10\}\)</span>
+<ul>
+<li>compute the train-set error and dev-set error (without using reguarization) for each <span class="math">\(\lambda\)</span></li>
+<li>plot the error curves over all lambda values</li>
+<li>choose the value of <span class="math">\(\lambda\)</span> that minimizes the error on the dev set</li>
+</ul>
+<img src="../images/bias-variance-6.png" title="fig:" /></li>
+</ul>
+<h3 id="debugging-a-regularized-model"><span class="header-section-number">1.4.5</span> Debugging a regularized model</h3>
+<p>When the model is overfitting (high variance)</p>
+<ul>
+<li>DO
+<ul>
+<li>get more training exmples</li>
+<li>try smaller sets of features</li>
+<li>try increasing <span class="math">\(\lambda\)</span></li>
+</ul></li>
+<li>DO NOT
+<ul>
+<li>try getting additional features</li>
+<li>try adding polynomial features</li>
+<li>try decreasing <span class="math">\(\lambda\)</span></li>
+</ul></li>
+</ul>
+<p>When the model is underfitting (high bias)</p>
+<ul>
+<li>DO
+<ul>
+<li>try getting additional features</li>
+<li>try adding polynomial features</li>
+<li>try decreasing <span class="math">\(\lambda\)</span></li>
+</ul></li>
+<li>DO NOT
+<ul>
+<li>get more training examples</li>
+<li>try smaller sets of features</li>
+<li>try increasing <span class="math">\(\lambda\)</span></li>
+</ul></li>
+</ul>
+<p>Additional statements</p>
+<ul>
+<li>a model with many parameters generates a low training set error</li>
+<li>a model trained on a very large training set is unlikely to overfit</li>
+</ul>
+<h3 id="error-analysis"><span class="header-section-number">1.4.6</span> Error analysis</h3>
+<ul>
+<li>start with a simple algorithm that can be implemented quickly</li>
+<li>plot learning curves to decide if it needs more data, more features, ...</li>
+<li>manually examine the examples on which the algorithm made errors; spot systematic trends on the type of errors</li>
+<li>use a single-number evaluation metric to decide which model works better</li>
 </ul>
 </body>
 </html>
