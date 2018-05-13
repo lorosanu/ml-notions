@@ -24,16 +24,26 @@ Simple linear regression is a statistical method that studies the relationship b
 </ul></li>
 <li><p>Model's hypothesis</p>
 <p><span class="math">\(h(x) = \theta_0 + \theta_1 \ast x = \hat{y}\)</span></p></li>
-<li>Model's parameters (# <span class="math">\(2\)</span>)
+<li><p>Model's parameters (# <span class="math">\(2\)</span>)</p>
 <ul>
 <li><span class="math">\(\theta_0\)</span>, <span class="math">\(\theta_1\)</span></li>
 </ul></li>
 <li><p>Cost function (in this case, the squared error function)</p>
 <p><span class="math">\(J(\theta_0, \theta_1) = \frac{1}{2m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right)^2\)</span></p></li>
 <li><p>Goal</p>
-<p><span class="math">\(minimize_{\theta_0, \theta_1} J(\theta_0, \theta_1)\)</span></p></li>
+<p><span class="math">\(\underset{\theta_0, \theta_1}{\operatorname{min}} J(\theta_0, \theta_1)\)</span></p></li>
 <li><p>Algorithm</p>
 <ul>
+<li><p>notations</p>
+<ul>
+<li><span class="math">\(x\)</span>: the independent variable</li>
+<li><span class="math">\(y\)</span>: the dependent variable</li>
+<li><span class="math">\(m\)</span>: the number of training examples</li>
+<li><span class="math">\(x^{(i)}\)</span>: the input value of the <span class="math">\(i^{th}\)</span> training example</li>
+<li><span class="math">\(y^{(i)}\)</span>: the target value of the <span class="math">\(i^{th}\)</span> training example</li>
+<li><span class="math">\(\hat{y}^{(i)}\)</span>: the prediction made on the <span class="math">\(i^{th}\)</span> training example by the current hypothesis function</li>
+<li><span class="math">\(\alpha\)</span>: the learning rate; determines how big steps we take when updating the <span class="math">\(\theta\)</span> parameters</li>
+</ul></li>
 <li><p>gradient descent</p>
 <ul>
 <li>start with some initial values for <span class="math">\(\theta_0\)</span> and <span class="math">\(\theta_1\)</span> (usually zero)</li>
@@ -48,24 +58,10 @@ Simple linear regression is a statistical method that studies the relationship b
 <li><p><span class="math">\(\theta_1 = \frac{\sum_{i=1}^{m} (x^{(i)} - \bar{x}) (y^{(i)} - \bar{y})}{\sum_{i=1}^{m} (x^{(i)} - \bar{x})^2}\)</span></p></li>
 <li><p><span class="math">\(\theta_0 = \bar{y} - \theta_1 \bar{x}\)</span></p></li>
 </ul></li>
-</ul></li>
-<li><p>Notations</p>
-<ul>
-<li><span class="math">\(x\)</span>: the independent variable</li>
-<li><span class="math">\(y\)</span>: the dependent variable</li>
-<li><span class="math">\(m\)</span>: the number of training examples</li>
-<li><span class="math">\(x^{(i)}\)</span>: the input value of the <span class="math">\(i^{th}\)</span> training example</li>
-<li><span class="math">\(y^{(i)}\)</span>: the target value of the <span class="math">\(i^{th}\)</span> training example</li>
-<li><span class="math">\(\hat{y}^{(i)}\)</span>: the prediction made on the <span class="math">\(i^{th}\)</span> training example by the current hypothesis function</li>
-<li><span class="math">\(\alpha\)</span>: the learning rate; determines how big steps we take when updating the <span class="math">\(\theta\)</span> parameters</li>
-</ul></li>
-<li><p>Hyperparameters:</p>
+<li><p>hyperparameters</p>
 <ul>
 <li><span class="math">\(\alpha\)</span>: if too small, slow gradient descent; if too large, gradient descent may fail to converge</li>
 </ul></li>
-<li><p>Problems:</p>
-<ul>
-<li>gradient descent may converge to a local minimum</li>
 </ul></li>
 </ul>
 <h2 id="multivariate-linear-regression"><span class="header-section-number">1.2</span> Multivariate linear regression</h2>
@@ -83,22 +79,10 @@ Multivariate linear regression is a statistical method that studies the relation
 <li><p>Cost function (in this case, the squared error function)</p>
 <p><span class="math">\(J(\theta) = \frac{1}{2m} \sum_{i=1}^{m} \left( \hat{y}^{(i)} - y^{(i)} \right)^2\)</span></p></li>
 <li><p>Goal</p>
-<p><span class="math">\(minimize_{\theta} J(\theta)\)</span></p></li>
+<p><span class="math">\(\underset{\theta}{\operatorname{min}} J(\theta)\)</span></p></li>
 <li><p>Algorithm</p>
 <ul>
-<li><p>gradient descent</p>
-<ul>
-<li>start with some initial values for <span class="math">\(\theta_0\)</span>, <span class="math">\(\theta_1\)</span>, ..., <span class="math">\(\theta_n\)</span> (usually <span class="math">\(0\)</span>)</li>
-<li><p>keep changing <span class="math">\(\theta\)</span>s to reduce <span class="math">\(J(\theta)\)</span></p>
-<ul>
-<li><p><span class="math">\(\theta_0 = \theta_0 - \alpha \frac{\partial J}{\partial \theta_0} = \theta_0 - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \right)\)</span></p></li>
-<li><p><span class="math">\(\theta_1 = \theta_1 - \alpha \frac{\partial J}{\partial \theta_1} = \theta_1 - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_1^{(i)}\right)\)</span></p></li>
-<li><p>...</p></li>
-<li><p><span class="math">\(\theta_n = \theta_n - \alpha \frac{\partial J}{\partial \theta_n} = \theta_n - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_n^{(i)}\right)\)</span></p></li>
-</ul></li>
-</ul></li>
-</ul></li>
-<li><p>Notations</p>
+<li><p>notations</p>
 <ul>
 <li><span class="math">\(x\)</span>: the independent variables</li>
 <li><span class="math">\(y\)</span>: the dependent variable</li>
@@ -110,17 +94,33 @@ Multivariate linear regression is a statistical method that studies the relation
 <li><span class="math">\(\hat{y}^{(i)}\)</span>: the prediction made on the <span class="math">\(i^{th}\)</span> training example by the current hypothesis function</li>
 <li><span class="math">\(\alpha\)</span>: the learning rate; determines how big steps we take when updating the <span class="math">\(\theta\)</span> parameters</li>
 </ul></li>
-<li><p>Hyperparameters:</p>
+<li><p>gradient descent</p>
+<ul>
+<li>start with some initial values for <span class="math">\(\theta_0\)</span>, <span class="math">\(\theta_1\)</span>, ..., <span class="math">\(\theta_n\)</span> (usually <span class="math">\(0\)</span>)</li>
+<li><p>keep changing <span class="math">\(\theta\)</span>s to reduce <span class="math">\(J(\theta)\)</span></p>
+<ul>
+<li><p><span class="math">\(\theta_0 = \theta_0 - \alpha \frac{\partial J}{\partial \theta_0} = \theta_0 - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \right)\)</span></p></li>
+<li><p><span class="math">\(\theta_1 = \theta_1 - \alpha \frac{\partial J}{\partial \theta_1} = \theta_1 - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_1^{(i)}\right)\)</span></p></li>
+<li><p>...</p></li>
+<li><p><span class="math">\(\theta_n = \theta_n - \alpha \frac{\partial J}{\partial \theta_n} = \theta_n - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_n^{(i)}\right)\)</span></p></li>
+</ul></li>
+</ul></li>
+<li><p>hyperparameters</p>
 <ul>
 <li><span class="math">\(\alpha\)</span></li>
 </ul></li>
-<li><p>Problems:</p>
+</ul></li>
+<li><p>Performance evaluation</p>
+<ul>
+<li><span class="math">\(R^2\)</span> regression score: <span class="math">\(R^2 = 1 − \sum_{i=1}^{n} \frac{y_i − \hat{y_i}}{y_i − \bar{y}}\)</span></li>
+</ul></li>
+<li><p>Problems</p>
 <ul>
 <li><p>make sure features are on similar scales; gradient descent may be slow otherwise</p>
 <ul>
-<li><p>rescaling: <span class="math">\(x&#39; = \frac{x - min(x)}{max(x) - min(x)}\)</span></p></li>
-<li><p>mean normalization: <span class="math">\(x&#39; = \frac{x - mean(x)}{max(x) - min(x)}\)</span></p></li>
-<li><p>standardization: <span class="math">\(x&#39; = \frac{x - mean(x)}{std(x)}\)</span></p></li>
+<li><p>feature scaling: <span class="math">\(x&#39; = \frac{x - min(x)}{max(x) - min(x)}\)</span></p></li>
+<li><p>feature scaling with mean normalization: <span class="math">\(x&#39; = \frac{x - mean(x)}{max(x) - min(x)}\)</span></p></li>
+<li><p>feature scaling with standardization: <span class="math">\(x&#39; = \frac{x - mean(x)}{std(x)}\)</span></p></li>
 </ul>
 <div class="figure">
 <img src="../images/normalizing_inputs.png" />
@@ -131,14 +131,19 @@ Multivariate linear regression is a statistical method that studies the relation
 <li>for a sufficiently small <span class="math">\(\alpha\)</span>, <span class="math">\(J(\theta)\)</span> should decrease on every iteration</li>
 <li>if <span class="math">\(\alpha\)</span> is too small, the gradient descent can be slow to converge</li>
 <li>if <span class="math">\(\alpha\)</span> is too large, <span class="math">\(J(\theta)\)</span> may not decrease on every iteration; may not converge</li>
-<li>try values <span class="math">\(\alpha \in \{..., 0.001, 0.01, 0.1, 1, ...\}\)</span></li>
+<li>try values <span class="math">\(\alpha \in \{..., 0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1, ...\}\)</span></li>
 </ul></li>
+<li><p>check model performance</p>
+<div class="figure">
+<img src="../images/linear-regression_performance.png" />
+</div>
+<ul>
 <li><p>in case of <strong>underfitting</strong></p>
 <ul>
 <li><p>try adding new features</p>
 <ul>
 <li><p>e.g, use a polynomial regression</p>
-<p><span class="math">\(\theta_0 + \theta_1 \ast x \ \ \ \Rightarrow \ \ \ \theta_0 + \theta_1 \ast x + \theta_2 \ast x^2 + \theta_3 \ast x^3\)</span></p></li>
+<p><span class="math">\(\theta_0 + \theta_1 \ast x \ \ \ \Rightarrow \ \ \ \theta_0 + \theta_1 \ast x + \theta_2 \ast x^2 + \theta_3 \ast x^3 + \dots\)</span></p></li>
 </ul></li>
 </ul></li>
 <li><p>in case of <strong>overfitting</strong></p>
@@ -154,7 +159,10 @@ Multivariate linear regression is a statistical method that studies the relation
 <li><p>use regularization</p>
 <ul>
 <li><p>keep all the features, but reduce the magnitude of parameters <span class="math">\(\theta\)</span>;<br /> works well when working with a lot of features, each of which contributes a bit to predicting <span class="math">\(y\)</span></p></li>
-<li><p>intuition: <em>shrink</em> model parameters in order to <em>smooth out</em> the decision boundary (generate a <em>simpler</em> hypothesis)</p></li>
+<li><p>intuition: <em>shrink</em> model parameters in order to <em>smooth out</em> the decision boundary (generate a <em>simpler</em> hypothesis)</p>
+<div class="figure">
+<img src="../images/linear-regression_regularization.png" />
+</div></li>
 <li><p>cost function with the <em>regularization term</em></p>
 <p><span class="math">\(J(\theta) = \frac{1}{2m} \sum_{i=1}^{m} \left( \hat{y}^{(i)} - y^{(i)} \right)^2 + \frac{\lambda}{2m} \sum_{j=1}^{n} \theta_j^2\)</span></p></li>
 <li><p>parameter update in gradient descent (for <span class="math">\(j \in \{1, 2, ..., n\}\)</span>)</p>
@@ -162,6 +170,7 @@ Multivariate linear regression is a statistical method that studies the relation
 <li><p><span class="math">\(\lambda\)</span> is the <em>regularization parameter</em> and needs to be tuned;<br /> it controls the trade-off between the goal of fitting the training data well and the goal of keeping the parameters small</p></li>
 </ul></li>
 <li><p>when using regularization, try increasing or decreasing <span class="math">\(\lambda\)</span></p></li>
+</ul></li>
 </ul></li>
 </ul></li>
 </ul>

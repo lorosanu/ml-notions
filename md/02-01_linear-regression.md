@@ -18,6 +18,7 @@ Although regression computes a linear combination, features can be transformed b
     $h(x) = \theta_0 + \theta_1 \ast x = \hat{y}$
 
 * Model's parameters (# $2$)
+
     * $\theta_0$, $\theta_1$
 
 * Cost function (in this case, the squared error function)
@@ -26,9 +27,19 @@ Although regression computes a linear combination, features can be transformed b
 
 * Goal
     
-    $minimize_{\theta_0, \theta_1} J(\theta_0, \theta_1)$
+    $\underset{\theta_0, \theta_1}{\operatorname{min}} J(\theta_0, \theta_1)$
 
 * Algorithm
+
+    * notations
+
+        * $x$: the independent variable
+        * $y$: the dependent variable
+        * $m$: the number of training examples
+        * $x^{(i)}$: the input value of the $i^{th}$ training example
+        * $y^{(i)}$: the target value of the $i^{th}$ training example
+        * $\hat{y}^{(i)}$: the prediction made on the $i^{th}$ training example by the current hypothesis function 
+        * $\alpha$: the learning rate; determines how big steps we take when updating the $\theta$ parameters
 
     * gradient descent
 
@@ -45,23 +56,9 @@ Although regression computes a linear combination, features can be transformed b
 
         * $\theta_0 = \bar{y} - \theta_1 \bar{x}$
 
-* Notations
+    * hyperparameters
 
-    * $x$: the independent variable
-    * $y$: the dependent variable
-    * $m$: the number of training examples
-    * $x^{(i)}$: the input value of the $i^{th}$ training example
-    * $y^{(i)}$: the target value of the $i^{th}$ training example
-    * $\hat{y}^{(i)}$: the prediction made on the $i^{th}$ training example by the current hypothesis function 
-    * $\alpha$: the learning rate; determines how big steps we take when updating the $\theta$ parameters
-
-* Hyperparameters:
-
-    * $\alpha$: if too small, slow gradient descent; if too large, gradient descent may fail to converge
-
-* Problems:
-
-    * gradient descent may converge to a local minimum
+        * $\alpha$: if too small, slow gradient descent; if too large, gradient descent may fail to converge
 
 ## Multivariate linear regression
 
@@ -85,9 +82,21 @@ Although regression computes a linear combination, features can be transformed b
 
 * Goal
 
-    $minimize_{\theta} J(\theta)$
+    $\underset{\theta}{\operatorname{min}} J(\theta)$
 
 * Algorithm
+
+    * notations
+
+        * $x$: the independent variables
+        * $y$: the dependent variable
+        * $m$: the number of training examples
+        * $n$: the number of features representing each training example
+        * $x^{(i)}$: the input values of the $i^{th}$ training example
+        * $x_j^{(i)}$: the value of the $j^{th}$ feature of the $i^{th}$ training example
+        * $y^{(i)}$: the target value of the $i^{th}$ training example
+        * $\hat{y}^{(i)}$: the prediction made on the $i^{th}$ training example by the current hypothesis function 
+        * $\alpha$: the learning rate; determines how big steps we take when updating the $\theta$ parameters
 
     * gradient descent
 
@@ -102,31 +111,23 @@ Although regression computes a linear combination, features can be transformed b
 
             * $\theta_n = \theta_n - \alpha \frac{\partial J}{\partial \theta_n} = \theta_n - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_n^{(i)}\right)$
 
-* Notations
+    * hyperparameters
 
-    * $x$: the independent variables
-    * $y$: the dependent variable
-    * $m$: the number of training examples
-    * $n$: the number of features representing each training example
-    * $x^{(i)}$: the input values of the $i^{th}$ training example
-    * $x_j^{(i)}$: the value of the $j^{th}$ feature of the $i^{th}$ training example
-    * $y^{(i)}$: the target value of the $i^{th}$ training example
-    * $\hat{y}^{(i)}$: the prediction made on the $i^{th}$ training example by the current hypothesis function 
-    * $\alpha$: the learning rate; determines how big steps we take when updating the $\theta$ parameters
+        * $\alpha$
 
-* Hyperparameters:
+* Performance evaluation
 
-    * $\alpha$
+    * $R^2$ regression score: $R^2 = 1 − \sum_{i=1}^{n} \frac{y_i − \hat{y_i}}{y_i − \bar{y}}$
 
-* Problems:
+* Problems
 
     * make sure features are on similar scales; gradient descent may be slow otherwise
 
-        * rescaling: $x' = \frac{x - min(x)}{max(x) - min(x)}$
+        * feature scaling: $x' = \frac{x - min(x)}{max(x) - min(x)}$
 
-        * mean normalization: $x' = \frac{x - mean(x)}{max(x) - min(x)}$
+        * feature scaling with mean normalization: $x' = \frac{x - mean(x)}{max(x) - min(x)}$
 
-        * standardization: $x' = \frac{x - mean(x)}{std(x)}$
+        * feature scaling with standardization: $x' = \frac{x - mean(x)}{std(x)}$
 
         ![](../images/normalizing_inputs.png)
 
@@ -136,45 +137,51 @@ Although regression computes a linear combination, features can be transformed b
         * for a sufficiently small $\alpha$, $J(\theta)$ should decrease on every iteration
         * if $\alpha$ is too small, the gradient descent can be slow to converge
         * if $\alpha$ is too large, $J(\theta)$ may not decrease on every iteration; may not converge
-        * try values $\alpha \in \{..., 0.001, 0.01, 0.1, 1, ...\}$
+        * try values $\alpha \in \{..., 0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1, ...\}$
 
-    * in case of **underfitting**
+    * check model performance
 
-        * try adding new features
+        ![](../images/linear-regression_performance.png)
 
-            * e.g, use a polynomial regression
+        * in case of **underfitting**
 
-                $\theta_0 + \theta_1 \ast x \ \ \ \Rightarrow \ \ \ \theta_0 + \theta_1 \ast x + \theta_2 \ast x^2 + \theta_3 \ast x^3$
+            * try adding new features
 
-    * in case of **overfitting**
+                * e.g, use a polynomial regression
 
-        * get more training examples
+                    $\theta_0 + \theta_1 \ast x \ \ \ \Rightarrow \ \ \ \theta_0 + \theta_1 \ast x + \theta_2 \ast x^2 + \theta_3 \ast x^3 + \dots$
 
-        * try reducing the number of features
+        * in case of **overfitting**
 
-            * manually select which features to keep
-            * use a model-selection algorithm
+            * get more training examples
 
-        * try getting additional features
+            * try reducing the number of features
 
-        * try adding polynomial features
+                * manually select which features to keep
+                * use a model-selection algorithm
 
-        * use regularization
+            * try getting additional features
 
-            * keep all the features, but reduce the magnitude of parameters $\theta$;  
-              works well when working with a lot of features, each of which contributes a bit to predicting $y$
+            * try adding polynomial features
 
-            * intuition: *shrink* model parameters in order to *smooth out* the decision boundary (generate a *simpler* hypothesis)
+            * use regularization
 
-            * cost function with the *regularization term*
+                * keep all the features, but reduce the magnitude of parameters $\theta$;  
+                  works well when working with a lot of features, each of which contributes a bit to predicting $y$
 
-                $J(\theta) = \frac{1}{2m} \sum_{i=1}^{m} \left( \hat{y}^{(i)} - y^{(i)} \right)^2 + \frac{\lambda}{2m} \sum_{j=1}^{n} \theta_j^2$
+                * intuition: *shrink* model parameters in order to *smooth out* the decision boundary (generate a *simpler* hypothesis)
 
-            * parameter update in gradient descent (for $j \in \{1, 2, ..., n\}$)
+                    ![](../images/linear-regression_regularization.png)
 
-                $\theta_j = \theta_j - \alpha \frac{\partial J}{\partial \theta_j} = \theta_j - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)} + \frac{\lambda}{m} \theta_j \right) = \theta_j \left( 1 - \alpha \frac{\lambda}{m} \right) - \alpha \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)}$
+                * cost function with the *regularization term*
 
-            * $\lambda$ is the *regularization parameter* and needs to be tuned;  
-              it controls the trade-off between the goal of fitting the training data well and the goal of keeping the parameters small
+                    $J(\theta) = \frac{1}{2m} \sum_{i=1}^{m} \left( \hat{y}^{(i)} - y^{(i)} \right)^2 + \frac{\lambda}{2m} \sum_{j=1}^{n} \theta_j^2$
 
-        * when using regularization, try increasing or decreasing $\lambda$
+                * parameter update in gradient descent (for $j \in \{1, 2, ..., n\}$)
+
+                    $\theta_j = \theta_j - \alpha \frac{\partial J}{\partial \theta_j} = \theta_j - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)} + \frac{\lambda}{m} \theta_j \right) = \theta_j \left( 1 - \alpha \frac{\lambda}{m} \right) - \alpha \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)}$
+
+                * $\lambda$ is the *regularization parameter* and needs to be tuned;  
+                  it controls the trade-off between the goal of fitting the training data well and the goal of keeping the parameters small
+
+            * when using regularization, try increasing or decreasing $\lambda$
