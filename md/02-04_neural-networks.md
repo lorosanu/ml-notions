@@ -62,6 +62,8 @@ Adding more layers helps computing even more complex functions on the input data
     * output layer with $K$ units ($\hat{y} = h_{\Theta}(x) \in \mathbb{R}^{K}$)
     * $L-1$ hidden layers with $s_{l}$ units (for $l \in \{1,...,L-1\}$)
 
+    ![](../images/nn_multiclass-classification.png)
+
 * Model's parameters
 
     $w=\left\{ w^{[1]}, w^{[2]}, ..., w^{[L]} \right\}$  
@@ -88,9 +90,11 @@ Adding more layers helps computing even more complex functions on the input data
             * $z^{[l]} = w^{[l]} a^{[l-1]} + b^{[l]}$
             * $a^{[l]} = g^{[l]}(z^{[l]})$
 
-            ![](../images/nn-3.png)
+            ![](../images/nn_fwd.png)
 
         * perform back-propagation: back propagate the error through each layer
+
+            ![](../images/nn_bkp.png)
 
             * last layer
 
@@ -110,6 +114,6 @@ Adding more layers helps computing even more complex functions on the input data
 
             * update the weights and biases for every layer
 
-                $w^{[l]} = w^{[l]} - \alpha dw^{[l]}$
+                $w^{[l]} = w^{[l]} - \alpha \ dw^{[l]}$
 
-                $b^{[l]} = b^{[l]} - \alpha db^{[l]}$
+                $b^{[l]} = b^{[l]} - \alpha \ db^{[l]}$

@@ -47,7 +47,10 @@
 <li>input layer with <span class="math">\(m\)</span> units (a training sample <span class="math">\(x\)</span>)</li>
 <li>output layer with <span class="math">\(K\)</span> units (<span class="math">\(\hat{y} = h_{\Theta}(x) \in \mathbb{R}^{K}\)</span>)</li>
 <li><span class="math">\(L-1\)</span> hidden layers with <span class="math">\(s_{l}\)</span> units (for <span class="math">\(l \in \{1,...,L-1\}\)</span>)</li>
-</ul></li>
+</ul>
+<div class="figure">
+<img src="../images/nn_multiclass-classification.png" />
+</div></li>
 <li><p>Model's parameters</p>
 <p><span class="math">\(w=\left\{ w^{[1]}, w^{[2]}, ..., w^{[L]} \right\}\)</span><br /><span class="math">\(b=\left\{ b^{[1]}, b^{[2]}, ..., b^{[L]} \right\}\)</span></p></li>
 <li><p>Cost function (depends on the output activation function)</p>
@@ -66,9 +69,12 @@
 <li><span class="math">\(a^{[l]} = g^{[l]}(z^{[l]})\)</span></li>
 </ul>
 <div class="figure">
-<img src="../images/nn-3.png" />
+<img src="../images/nn_fwd.png" />
 </div></li>
 <li><p>perform back-propagation: back propagate the error through each layer</p>
+<div class="figure">
+<img src="../images/nn_bkp.png" />
+</div>
 <ul>
 <li><p>last layer</p>
 <p><span class="math">\(dz^{[L]} = \frac{\partial \ J}{\partial \ z^{[l]}} = a^{[L]} - y\)</span></p>
@@ -79,8 +85,8 @@
 <p><span class="math">\(dw^{[l]} = \frac{1}{m} dz^{[l+1]} a^{[l-1]}\)</span></p>
 <p><span class="math">\(db^{[l]} = \frac{1}{m} dz^{[l+1]}\)</span></p></li>
 <li><p>update the weights and biases for every layer</p>
-<p><span class="math">\(w^{[l]} = w^{[l]} - \alpha dw^{[l]}\)</span></p>
-<p><span class="math">\(b^{[l]} = b^{[l]} - \alpha db^{[l]}\)</span></p></li>
+<p><span class="math">\(w^{[l]} = w^{[l]} - \alpha \ dw^{[l]}\)</span></p>
+<p><span class="math">\(b^{[l]} = b^{[l]} - \alpha \ db^{[l]}\)</span></p></li>
 </ul></li>
 </ul></li>
 </ul></li>
