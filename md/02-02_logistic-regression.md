@@ -24,7 +24,9 @@ Predict target class or probabilities of target classes.
 
     * $z = \theta_0 + \theta_1 \ast x_1  + \theta_2 \ast x_2 + ... + \theta_n \ast x_n$
 
-    * $h(x) = P(y=1|x, \theta) = \sigma(z) = \frac{1}{1 + \mathrm{e}^{-z}} = \hat{y}\ \ \ $ ($0 <= h(x) <= 1$)
+    * $h_{\theta}(x) = P(y=1|x, \theta) = \sigma(z) = \frac{1}{1 + \mathrm{e}^{-z}} = \hat{y}\ \ \ $ ($0 <= h(x) <= 1$)
+
+    * Note: $\sigma(z) \ge 0.5$ when $z \ge 0$ 
 
 * Model's parameters (# $n+1$)
 
@@ -41,12 +43,21 @@ Predict target class or probabilities of target classes.
     $J(\theta) = \frac{1}{m} \sum_{i=1}^{m} \left( -y^{(i)}\ log\ \hat{y}^{(i)} - (1 - y^{(i)})\ log\ (1 - \hat{y}^{(i)}) \right)$
 
     in other words
+
     * $J(\theta) = \frac{1}{m} \sum_{i=1}^{m} \left( -\ log\ \hat{y}^{(i)} \right)$ when $y^{(i)}=1$
     * $J(\theta) = \frac{1}{m} \sum_{i=1}^{m} \left( -\ log\ (1 - \hat{y}^{(i)}) \right)$ when $y^{(i)}=0$
 
+    ![](../images/logistic-regression_cost.png)
+
+    intuition
+
+    * when $y=1$ and $\hat{y} \rightarrow 0$ then $J(\theta) \rightarrow \infty$
+
+    * when $y=0$ and $\hat{y} \rightarrow 1$ then $J(\theta) \rightarrow \infty$
+
 * Goal
     
-    $minimize_{\theta} J(\theta)$
+    $\underset{\theta}{\operatorname{min}} J(\theta)$
 
 * Algorithm
 
@@ -63,55 +74,73 @@ Predict target class or probabilities of target classes.
 
             * $\theta_n = \theta_n - \alpha \frac{\partial J}{\partial \theta_n} = \theta_n - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_n^{(i)}\right)$
 
-* Hyperparameters
+    * hyperparameters
 
-    * $\alpha$
+        * $\alpha$
 
-* Problems
-
-    * the idea of feature scaling also aplied for logistic regression
-
-    * make sure the gradient descent is working correctly
-
-    * in case of **underfitting**
-
-        * try adding new features
-
-            * e.g, use a polynomial regression
-
-                $\theta_0 + \theta_1 \ast x \ \ \ \Rightarrow \ \ \ \theta_0 + \theta_1 \ast x + \theta_2 \ast x^2 + \theta_3 \ast x^3$
-
-    * in case of **overfitting**
-
-        * reduce the number of features
-
-            * manually select which features to keep
-            * use a model-selection algorithm
-
-        * use regularization
-
-            * keep all the features, but reduce the magnitude of parameters $\theta$;  
-              works well when working with a lot of features, each of which contributes a bit to predicting $y$
-
-            * intuition: *shrink* model parameters in order to *smooth out* the decision boundary (generate a *simpler* hypothesis)
-
-            * cost function with the regularization term
-
-                $J(\theta) = \frac{1}{m} \sum_{i=1}^{m} \left( -y^{(i)}\ log\ \hat{y}^{(i)} - (1 - y^{(i)})\ log\ (1 - \hat{y}^{(i)}) \right) + \frac{\lambda}{2m} \sum_{j=1}^{n} \theta_j^2$
-
-            * parameter update in gradient descent (for $j \in \{1, 2, ..., n\}$)
-
-                $\theta_j = \theta_j - \alpha \frac{\partial J}{\partial \theta_j} = \theta_j - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)} + \frac{\lambda}{m} \theta_j \right) = \theta_j \left( 1 - \alpha \frac{\lambda}{m} \right) - \alpha \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)}$
-
-            * $\lambda$ is the *regularization parameter* and needs to be tuned;  
-              it controls the trade-off between the goal of fitting the training data well and the goal of keeping the parameters small
-
-* Evaluation metrics
+* Performance evaluation
 
     * accuracy: out of all predictions, how many of them were correct
     * precision: out of all *positive* predictions, how many of them were actually *positive* examples
     * recall: out of all positive examples, how many of them were detected as positive
     * f1-score: harmonic mean between precision and recall
+
+* Problems
+
+    * feature scaling is also important for logistic regression
+    
+        * feature scaling: $x' = \frac{x - min(x)}{max(x) - min(x)}$
+
+        * feature scaling with mean normalization: $x' = \frac{x - mean(x)}{max(x) - min(x)}$
+
+        * feature scaling with standardization: $x' = \frac{x - mean(x)}{std(x)}$
+
+    * make sure the gradient descent is working correctly
+
+        * plot the value of the cost function $J$ over the number of iterations (# epochs)
+        * for a sufficiently small $\alpha$, $J(\theta)$ should decrease on every iteration
+        * if $\alpha$ is too small, the gradient descent can be slow to converge
+        * if $\alpha$ is too large, $J(\theta)$ may not decrease on every iteration; may not converge
+        * try values $\alpha \in \{...,0.001,0.003,0.01,0.03,0.1,0.3,1,...\}$
+
+    * check model performance
+
+        ![](../images/logistic-regression_performance.png)
+
+        * in case of **underfitting**
+
+            * try adding new features
+
+                * e.g, use a polynomial regression
+
+                    $\theta_0 + \theta_1 \ast x \ \ \ \Rightarrow \ \ \ \theta_0 + \theta_1 \ast x + \theta_2 \ast x^2 + \theta_3 \ast x^3 + \dots$
+
+        * in case of **overfitting**
+
+            * reduce the number of features
+
+                * manually select which features to keep
+                * use a model-selection algorithm
+
+            * use regularization
+
+                * keep all the features, but reduce the magnitude of parameters $\theta$;  
+                  works well when working with a lot of features, each of which contributes a bit to predicting $y$
+
+                * intuition: *shrink* model parameters in order to *smooth out* the decision boundary (generate a *simpler* hypothesis)
+
+                    ![](../images/logistic-regression_regularization.png)
+
+                * cost function with the regularization term
+
+                    $J(\theta) = \frac{1}{m} \sum_{i=1}^{m} \left( -y^{(i)}\ log\ \hat{y}^{(i)} - (1 - y^{(i)})\ log\ (1 - \hat{y}^{(i)}) \right) + \frac{\lambda}{2m} \sum_{j=1}^{n} \theta_j^2$
+
+                * parameter update in gradient descent (for $j \in \{1, 2, ..., n\}$)
+
+                    $\theta_j = \theta_j - \alpha \frac{\partial J}{\partial \theta_j} = \theta_j - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)} + \frac{\lambda}{m} \theta_j \right) = \theta_j \left( 1 - \alpha \frac{\lambda}{m} \right) - \alpha \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)}$
+
+                * $\lambda$ is the *regularization parameter* and needs to be tuned;  
+                  it controls the trade-off between the goal of fitting the training data well and the goal of keeping the parameters small
 
 * Trading off precision and recall
 
@@ -131,4 +160,6 @@ Predict target class or probabilities of target classes.
     * use the one-vs-all (one-vs-rest) approach
     * turn the problem into $C$ binary classification problems (generate $C$ decision boundaries)
     * formally: train a logistic regression classifier $h^{(i)}(x)$ for each class $i$ to predict the probability that $y=i$
-    * on a new input $x$, in order to make a prediction pick the class $i$ that maximizes $max_i h^{(i)}(x)$
+    * on a new input $x$, in order to make a prediction pick the class $i$ that maximizes the class probability $\underset{i}{\operatorname{max}}  h^{(i)}(x)$
+
+    ![](../images/logistic-regression_multi.png)

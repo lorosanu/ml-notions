@@ -31,7 +31,8 @@ Logistic regression expands the linear regression model with a <em>logistic func
 <li><p>Model's hypothesis: output the estimated probability that <span class="math">\(y=1\)</span> on input x</p>
 <ul>
 <li><p><span class="math">\(z = \theta_0 + \theta_1 \ast x_1  + \theta_2 \ast x_2 + ... + \theta_n \ast x_n\)</span></p></li>
-<li><p><span class="math">\(h(x) = P(y=1|x, \theta) = \sigma(z) = \frac{1}{1 + \mathrm{e}^{-z}} = \hat{y}\ \ \ \)</span> (<span class="math">\(0 &lt;= h(x) &lt;= 1\)</span>)</p></li>
+<li><p><span class="math">\(h_{\theta}(x) = P(y=1|x, \theta) = \sigma(z) = \frac{1}{1 + \mathrm{e}^{-z}} = \hat{y}\ \ \ \)</span> (<span class="math">\(0 &lt;= h(x) &lt;= 1\)</span>)</p></li>
+<li><p>Note: <span class="math">\(\sigma(z) \ge 0.5\)</span> when <span class="math">\(z \ge 0\)</span></p></li>
 </ul></li>
 <li><p>Model's parameters (# <span class="math">\(n+1\)</span>)</p>
 <p><span class="math">\(\theta=\{\theta_0, \theta_1, ..., \theta_n\}\)</span></p></li>
@@ -42,13 +43,21 @@ Logistic regression expands the linear regression model with a <em>logistic func
 </ul></li>
 <li><p>Cost function</p>
 <p><span class="math">\(J(\theta) = \frac{1}{m} \sum_{i=1}^{m} \left( -y^{(i)}\ log\ \hat{y}^{(i)} - (1 - y^{(i)})\ log\ (1 - \hat{y}^{(i)}) \right)\)</span></p>
-in other words
+<p>in other words</p>
 <ul>
 <li><span class="math">\(J(\theta) = \frac{1}{m} \sum_{i=1}^{m} \left( -\ log\ \hat{y}^{(i)} \right)\)</span> when <span class="math">\(y^{(i)}=1\)</span></li>
 <li><span class="math">\(J(\theta) = \frac{1}{m} \sum_{i=1}^{m} \left( -\ log\ (1 - \hat{y}^{(i)}) \right)\)</span> when <span class="math">\(y^{(i)}=0\)</span></li>
+</ul>
+<div class="figure">
+<img src="../images/logistic-regression_cost.png" />
+</div>
+<p>intuition</p>
+<ul>
+<li><p>when <span class="math">\(y=1\)</span> and <span class="math">\(\hat{y} \rightarrow 0\)</span> then <span class="math">\(J(\theta) \rightarrow \infty\)</span></p></li>
+<li><p>when <span class="math">\(y=0\)</span> and <span class="math">\(\hat{y} \rightarrow 1\)</span> then <span class="math">\(J(\theta) \rightarrow \infty\)</span></p></li>
 </ul></li>
 <li><p>Goal</p>
-<p><span class="math">\(minimize_{\theta} J(\theta)\)</span></p></li>
+<p><span class="math">\(\underset{\theta}{\operatorname{min}} J(\theta)\)</span></p></li>
 <li><p>Algorithm</p>
 <ul>
 <li><p>gradient descent</p>
@@ -62,21 +71,45 @@ in other words
 <li><p><span class="math">\(\theta_n = \theta_n - \alpha \frac{\partial J}{\partial \theta_n} = \theta_n - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_n^{(i)}\right)\)</span></p></li>
 </ul></li>
 </ul></li>
-</ul></li>
-<li><p>Hyperparameters</p>
+<li><p>hyperparameters</p>
 <ul>
 <li><span class="math">\(\alpha\)</span></li>
 </ul></li>
+</ul></li>
+<li><p>Performance evaluation</p>
+<ul>
+<li>accuracy: out of all predictions, how many of them were correct</li>
+<li>precision: out of all <em>positive</em> predictions, how many of them were actually <em>positive</em> examples</li>
+<li>recall: out of all positive examples, how many of them were detected as positive</li>
+<li>f1-score: harmonic mean between precision and recall</li>
+</ul></li>
 <li><p>Problems</p>
 <ul>
-<li><p>the idea of feature scaling also aplied for logistic regression</p></li>
-<li><p>make sure the gradient descent is working correctly</p></li>
+<li><p>feature scaling is also important for logistic regression</p>
+<ul>
+<li><p>feature scaling: <span class="math">\(x&#39; = \frac{x - min(x)}{max(x) - min(x)}\)</span></p></li>
+<li><p>feature scaling with mean normalization: <span class="math">\(x&#39; = \frac{x - mean(x)}{max(x) - min(x)}\)</span></p></li>
+<li><p>feature scaling with standardization: <span class="math">\(x&#39; = \frac{x - mean(x)}{std(x)}\)</span></p></li>
+</ul></li>
+<li><p>make sure the gradient descent is working correctly</p>
+<ul>
+<li>plot the value of the cost function <span class="math">\(J\)</span> over the number of iterations (# epochs)</li>
+<li>for a sufficiently small <span class="math">\(\alpha\)</span>, <span class="math">\(J(\theta)\)</span> should decrease on every iteration</li>
+<li>if <span class="math">\(\alpha\)</span> is too small, the gradient descent can be slow to converge</li>
+<li>if <span class="math">\(\alpha\)</span> is too large, <span class="math">\(J(\theta)\)</span> may not decrease on every iteration; may not converge</li>
+<li>try values <span class="math">\(\alpha \in \{...,0.001,0.003,0.01,0.03,0.1,0.3,1,...\}\)</span></li>
+</ul></li>
+<li><p>check model performance</p>
+<div class="figure">
+<img src="../images/logistic-regression_performance.png" />
+</div>
+<ul>
 <li><p>in case of <strong>underfitting</strong></p>
 <ul>
 <li><p>try adding new features</p>
 <ul>
 <li><p>e.g, use a polynomial regression</p>
-<p><span class="math">\(\theta_0 + \theta_1 \ast x \ \ \ \Rightarrow \ \ \ \theta_0 + \theta_1 \ast x + \theta_2 \ast x^2 + \theta_3 \ast x^3\)</span></p></li>
+<p><span class="math">\(\theta_0 + \theta_1 \ast x \ \ \ \Rightarrow \ \ \ \theta_0 + \theta_1 \ast x + \theta_2 \ast x^2 + \theta_3 \ast x^3 + \dots\)</span></p></li>
 </ul></li>
 </ul></li>
 <li><p>in case of <strong>overfitting</strong></p>
@@ -89,7 +122,10 @@ in other words
 <li><p>use regularization</p>
 <ul>
 <li><p>keep all the features, but reduce the magnitude of parameters <span class="math">\(\theta\)</span>;<br /> works well when working with a lot of features, each of which contributes a bit to predicting <span class="math">\(y\)</span></p></li>
-<li><p>intuition: <em>shrink</em> model parameters in order to <em>smooth out</em> the decision boundary (generate a <em>simpler</em> hypothesis)</p></li>
+<li><p>intuition: <em>shrink</em> model parameters in order to <em>smooth out</em> the decision boundary (generate a <em>simpler</em> hypothesis)</p>
+<div class="figure">
+<img src="../images/logistic-regression_regularization.png" />
+</div></li>
 <li><p>cost function with the regularization term</p>
 <p><span class="math">\(J(\theta) = \frac{1}{m} \sum_{i=1}^{m} \left( -y^{(i)}\ log\ \hat{y}^{(i)} - (1 - y^{(i)})\ log\ (1 - \hat{y}^{(i)}) \right) + \frac{\lambda}{2m} \sum_{j=1}^{n} \theta_j^2\)</span></p></li>
 <li><p>parameter update in gradient descent (for <span class="math">\(j \in \{1, 2, ..., n\}\)</span>)</p>
@@ -98,12 +134,6 @@ in other words
 </ul></li>
 </ul></li>
 </ul></li>
-<li><p>Evaluation metrics</p>
-<ul>
-<li>accuracy: out of all predictions, how many of them were correct</li>
-<li>precision: out of all <em>positive</em> predictions, how many of them were actually <em>positive</em> examples</li>
-<li>recall: out of all positive examples, how many of them were detected as positive</li>
-<li>f1-score: harmonic mean between precision and recall</li>
 </ul></li>
 <li><p>Trading off precision and recall</p>
 <ul>
@@ -128,8 +158,11 @@ in other words
 <li>use the one-vs-all (one-vs-rest) approach</li>
 <li>turn the problem into <span class="math">\(C\)</span> binary classification problems (generate <span class="math">\(C\)</span> decision boundaries)</li>
 <li>formally: train a logistic regression classifier <span class="math">\(h^{(i)}(x)\)</span> for each class <span class="math">\(i\)</span> to predict the probability that <span class="math">\(y=i\)</span></li>
-<li>on a new input <span class="math">\(x\)</span>, in order to make a prediction pick the class <span class="math">\(i\)</span> that maximizes <span class="math">\(max_i h^{(i)}(x)\)</span></li>
-</ul></li>
+<li>on a new input <span class="math">\(x\)</span>, in order to make a prediction pick the class <span class="math">\(i\)</span> that maximizes the class probability <span class="math">\(\underset{i}{\operatorname{max}}  h^{(i)}(x)\)</span></li>
+</ul>
+<div class="figure">
+<img src="../images/logistic-regression_multi.png" />
+</div></li>
 </ul>
 </body>
 </html>
