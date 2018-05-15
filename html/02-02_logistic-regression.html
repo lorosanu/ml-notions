@@ -130,8 +130,29 @@ Logistic regression expands the linear regression model with a <em>logistic func
 <p><span class="math">\(J(\theta) = \frac{1}{m} \sum_{i=1}^{m} \left( -y^{(i)}\ log\ \hat{y}^{(i)} - (1 - y^{(i)})\ log\ (1 - \hat{y}^{(i)}) \right) + \frac{\lambda}{2m} \sum_{j=1}^{n} \theta_j^2\)</span></p></li>
 <li><p>parameter update in gradient descent (for <span class="math">\(j \in \{1, 2, ..., n\}\)</span>)</p>
 <p><span class="math">\(\theta_j = \theta_j - \alpha \frac{\partial J}{\partial \theta_j} = \theta_j - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)} + \frac{\lambda}{m} \theta_j \right) = \theta_j \left( 1 - \alpha \frac{\lambda}{m} \right) - \alpha \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)}\)</span></p></li>
-<li><p><span class="math">\(\lambda\)</span> is the <em>regularization parameter</em> and needs to be tuned;<br /> it controls the trade-off between the goal of fitting the training data well and the goal of keeping the parameters small</p></li>
+<li><p><span class="math">\(\lambda\)</span> is the <em>regularization parameter</em> and needs to be tuned;<br /> it controls the trade-off between the goal of fitting the training data well and the goal of keeping the parameters small;<br /> try values <span class="math">\(\lambda \in \{0, 0.02, 0.04, 0.08, 0.16, ..., 10\}\)</span></p></li>
 </ul></li>
+<li><p>when using regularization, try increasing or decreasing <span class="math">\(\lambda\)</span></p>
+<div class="figure">
+<img src="../images/lambda_tuning_2.png" />
+</div></li>
+</ul></li>
+</ul></li>
+<li><p>debugging</p>
+<ul>
+<li><p>choices to make when dealing with an underfit or an overtfit model</p>
+<div class="figure">
+<img src="../images/linear-regression_bias-variance_debugging.png" />
+</div></li>
+<li><p>machine learning diagnostic</p>
+<ul>
+<li>gain guidance on how to improve the model's performance</li>
+<li>draw <strong>learning curves</strong>: check the train and dev set error when training on various sizes of the training data set (<span class="math">\(1 \le i \le m\)</span>)
+<ul>
+<li>high bias <span class="math">\(\Rightarrow\)</span> getting more data won't help</li>
+<li>high variance <span class="math">\(\Rightarrow\)</span> getting more data might help</li>
+</ul>
+<img src="../images/bias-variance-4-.png" /> <span class="math">\(\quad \quad \quad\)</span> <img src="../images/bias-variance-5-.png" /></li>
 </ul></li>
 </ul></li>
 </ul></li>

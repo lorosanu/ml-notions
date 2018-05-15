@@ -140,7 +140,28 @@ Predict target class or probabilities of target classes.
                     $\theta_j = \theta_j - \alpha \frac{\partial J}{\partial \theta_j} = \theta_j - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)} + \frac{\lambda}{m} \theta_j \right) = \theta_j \left( 1 - \alpha \frac{\lambda}{m} \right) - \alpha \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)}$
 
                 * $\lambda$ is the *regularization parameter* and needs to be tuned;  
-                  it controls the trade-off between the goal of fitting the training data well and the goal of keeping the parameters small
+                  it controls the trade-off between the goal of fitting the training data well and the goal of keeping the parameters small;  
+                  try values $\lambda \in \{0, 0.02, 0.04, 0.08, 0.16, ..., 10\}$
+
+            * when using regularization, try increasing or decreasing $\lambda$
+
+                  ![](../images/lambda_tuning_2.png)
+
+    * debugging
+
+        * choices to make when dealing with an underfit or an overtfit model
+
+            ![](../images/linear-regression_bias-variance_debugging.png)
+
+        * machine learning diagnostic
+
+            * gain guidance on how to improve the model's performance
+            * draw **learning curves**: check the train and dev set error when training on various sizes of the training data set ($1 \le i \le m$)
+                * high bias $\Rightarrow$ getting more data won't help
+                * high variance $\Rightarrow$ getting more data might help
+
+                ![](../images/bias-variance-4-.png) $\quad \quad \quad$
+                ![](../images/bias-variance-5-.png)
 
 * Trading off precision and recall
 

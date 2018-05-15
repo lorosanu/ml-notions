@@ -112,7 +112,7 @@ Multivariate linear regression is a statistical method that studies the relation
 </ul></li>
 <li><p>Performance evaluation</p>
 <ul>
-<li><span class="math">\(R^2\)</span> regression score: <span class="math">\(R^2 = 1 − \sum_{i=1}^{n} \frac{y_i − \hat{y_i}}{y_i − \bar{y}}\)</span></li>
+<li><span class="math">\(R^2\)</span> regression score: <span class="math">\(R^2 = 1 − \frac{\sum_{i=1}^{n} (y_i − \hat{y_i})^2}{\sum_{i=1}^{n} (y_i − \bar{y})^2}\)</span></li>
 </ul></li>
 <li><p>Problems</p>
 <ul>
@@ -167,9 +167,32 @@ Multivariate linear regression is a statistical method that studies the relation
 <p><span class="math">\(J(\theta) = \frac{1}{2m} \sum_{i=1}^{m} \left( \hat{y}^{(i)} - y^{(i)} \right)^2 + \frac{\lambda}{2m} \sum_{j=1}^{n} \theta_j^2\)</span></p></li>
 <li><p>parameter update in gradient descent (for <span class="math">\(j \in \{1, 2, ..., n\}\)</span>)</p>
 <p><span class="math">\(\theta_j = \theta_j - \alpha \frac{\partial J}{\partial \theta_j} = \theta_j - \alpha \left( \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)} + \frac{\lambda}{m} \theta_j \right) = \theta_j \left( 1 - \alpha \frac{\lambda}{m} \right) - \alpha \frac{1}{m} \sum_{i=1}^{m} \left( \hat{y}^{i} - y^{(i)} \right) \cdot x_j^{(i)}\)</span></p></li>
-<li><p><span class="math">\(\lambda\)</span> is the <em>regularization parameter</em> and needs to be tuned;<br /> it controls the trade-off between the goal of fitting the training data well and the goal of keeping the parameters small</p></li>
+<li><p><span class="math">\(\lambda\)</span> is the <em>regularization parameter</em> and needs to be tuned;<br /> it controls the trade-off between the goal of fitting the training data well and the goal of keeping the parameters small;<br /> try values <span class="math">\(\lambda \in \{0, 0.02, 0.04, 0.08, 0.16, ..., 10\}\)</span></p></li>
+</ul>
+<div class="figure">
+<img src="../images/lambda_tuning_1.png" />
+</div></li>
+<li><p>when using regularization, try increasing or decreasing <span class="math">\(\lambda\)</span></p>
+<div class="figure">
+<img src="../images/lambda_tuning_2.png" />
+</div></li>
 </ul></li>
-<li><p>when using regularization, try increasing or decreasing <span class="math">\(\lambda\)</span></p></li>
+</ul></li>
+<li><p>debugging</p>
+<ul>
+<li><p>choices to make when dealing with an underfit or an overtfit model</p>
+<div class="figure">
+<img src="../images/linear-regression_bias-variance_debugging.png" />
+</div></li>
+<li><p>machine learning diagnostic</p>
+<ul>
+<li>gain guidance on how to improve the model's performance</li>
+<li>draw <strong>learning curves</strong>: check the train and dev set error when training on various sizes of the training data set (<span class="math">\(1 \le i \le m\)</span>)
+<ul>
+<li>high bias <span class="math">\(\Rightarrow\)</span> getting more data won't help</li>
+<li>high variance <span class="math">\(\Rightarrow\)</span> getting more data might help</li>
+</ul>
+<img src="../images/bias-variance-4.png" /> <span class="math">\(\quad \quad \quad\)</span> <img src="../images/bias-variance-5.png" /></li>
 </ul></li>
 </ul></li>
 </ul></li>
