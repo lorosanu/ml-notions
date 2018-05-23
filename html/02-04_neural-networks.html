@@ -23,13 +23,13 @@
 </div>
 <h2 id="notation"><span class="header-section-number">1.2</span> Notation</h2>
 <ul>
-<li><p>training set <span class="math">\(\left\{(x^{(1)}, y^{(1)}), (x^{(2)}, y^{(2)}), ..., (x^{(m)}, y^{(m)})\right\}\)</span> with <span class="math">\(m\)</span> training samples</p></li>
+<li><p>training set <span class="math">\(X = \left\{(x^{(1)}, y^{(1)}), (x^{(2)}, y^{(2)}), ..., (x^{(m)}, y^{(m)})\right\}\)</span> with <span class="math">\(m\)</span> training samples</p></li>
 <li><p>each input variable has <span class="math">\(n\)</span> features: <span class="math">\(x^{(i)}=\{x_1^{(i)}, x_2^{(i)}, ..., x_n^{(i)}\}\)</span></p></li>
 <li><p>output variable <span class="math">\(y^{(i)}\)</span>, represented by either a single value (in case of regression or binary classification) or by an identity vector (in case of multi-class classification)</p></li>
 <li><p><span class="math">\(L\)</span>: the total number of layers in the network (comprising the hidden layers and the output layer)</p></li>
 <li><p><span class="math">\(n^{[l]}\)</span>: the number of units (neurons) in layer <span class="math">\(l\)</span></p></li>
-<li><p><span class="math">\(w^{[l]}\)</span>: weights matrix <span class="math">\(\left[ n^{[l]} \ \times \ n^{[l-1]} \right]\)</span> controlling function mapping from layer <span class="math">\(l-1\)</span> to layer <span class="math">\(l\)</span>; <span class="math">\(w_{ij}^{[l]}\)</span>: weight to unit <span class="math">\(i\)</span> in layer <span class="math">\(l\)</span> from unit <span class="math">\(j\)</span> in layer <span class="math">\(l-1\)</span></p></li>
-<li><p><span class="math">\(b^{[l]}\)</span>: bias vector <span class="math">\(\left[ n^{[l]}, 1 \right]\)</span> on layer <span class="math">\(l\)</span>; <span class="math">\(b_{i}^{[l]}\)</span>: bias on unit <span class="math">\(i\)</span> in layer <span class="math">\(l\)</span></p></li>
+<li><p><span class="math">\(w^{[l]}\)</span>: weights matrix <span class="math">\(\left[ n^{[l]},\ n^{[l-1]} \right]\)</span> controlling function mapping from layer <span class="math">\(l-1\)</span> to layer <span class="math">\(l\)</span>; <span class="math">\(w_{ij}^{[l]}\)</span>: weight to unit <span class="math">\(i\)</span> in layer <span class="math">\(l\)</span> from unit <span class="math">\(j\)</span> in layer <span class="math">\(l-1\)</span></p></li>
+<li><p><span class="math">\(b^{[l]}\)</span>: bias vector <span class="math">\(\left[ n^{[l]},\ 1 \right]\)</span> on layer <span class="math">\(l\)</span>; <span class="math">\(b_{i}^{[l]}\)</span>: bias on unit <span class="math">\(i\)</span> in layer <span class="math">\(l\)</span></p></li>
 <li><p>activation values outputed from layer <span class="math">\(l\)</span></p>
 <p><span class="math">\(z^{[l]} = w^{[l]} a^{[l-1]} + b^{[l]}\)</span></p>
 <p><span class="math">\(a^{[l]} = g^{[l]}(z^{[l]})\)</span></p></li>
@@ -43,47 +43,59 @@
 <li><p>Model's architecture</p>
 <ul>
 <li>fully connected network</li>
-<li><span class="math">\(L\)</span> layers</li>
-<li>input layer with <span class="math">\(m\)</span> units (a training sample <span class="math">\(x\)</span>)</li>
-<li>output layer with <span class="math">\(K\)</span> units (<span class="math">\(\hat{y} = h_{\Theta}(x) \in \mathbb{R}^{K}\)</span>)</li>
-<li><span class="math">\(L-1\)</span> hidden layers with <span class="math">\(s_{l}\)</span> units (for <span class="math">\(l \in \{1,...,L-1\}\)</span>)</li>
+<li><span class="math">\(L=3\)</span> layers</li>
+<li>input layer with <span class="math">\(n=3\)</span> units (a training sample <span class="math">\(x\)</span>)</li>
+<li>output layer with <span class="math">\(K=4\)</span> units (<span class="math">\(\hat{y} = h_{\Theta}(x) \in \mathbb{R}^{K}\)</span>)</li>
+<li><span class="math">\(L-1=2\)</span> hidden layers with <span class="math">\(n^{[l]}=5\)</span> units (for <span class="math">\(l \in \{1,...,L-1\}\)</span>)</li>
 </ul>
 <div class="figure">
 <img src="../images/nn_multiclass-classification.png" />
 </div></li>
 <li><p>Model's parameters</p>
-<p><span class="math">\(w=\left\{ w^{[1]}, w^{[2]}, ..., w^{[L]} \right\}\)</span><br /><span class="math">\(b=\left\{ b^{[1]}, b^{[2]}, ..., b^{[L]} \right\}\)</span></p></li>
-<li><p>Cost function (depends on the output activation function)</p>
-<p><span class="math">\(J(w, b) = \frac{1}{m} \sum_{i=1}^{m} \mathscr{L}(\hat{y}, y) = \frac{1}{m} \sum_{i=1}^{m} \sum_{k=1}^{K} \left( -y_k^{(i)}\ log\ \hat{y}_k^{(i)} - (1 - y_k^{(i)})\ log\ (1 - \hat{y}_k^{(i)}) \right)\)</span></p></li>
+<ul>
+<li><span class="math">\(w=\left\{ w^{[1]}, w^{[2]}, ..., w^{[L]} \right\}\)</span></li>
+<li><span class="math">\(b=\left\{ b^{[1]}, b^{[2]}, ..., b^{[L]} \right\}\)</span></li>
+</ul></li>
+<li><p>Data</p>
+<ul>
+<li><span class="math">\(X = \left[ n,\ m \right]\)</span> matrix</li>
+<li><span class="math">\(Y = \left[ K,\ m \right]\)</span> matrix</li>
+</ul></li>
+<li><p>Cost function (for the softmax activation function)</p>
+<p><span class="math">\(J(w, b) = \frac{1}{m} \sum_{i=1}^{m} \mathscr{L}(\hat{y}, y) = \frac{1}{m} \sum_{i=1}^{m} \sum_{k=1}^{K} \left( -y_k^{(i)}\ log\ \hat{y}_k^{(i)}\right)\)</span></p></li>
 <li><p>Goal</p>
 <p><span class="math">\(\underset{w, b}{\operatorname{min}} J(w, b)\)</span></p></li>
-<li><p>Algorithm</p>
+<li><p>Algorithm (vectorized implementation)</p>
 <ul>
-<li><p>start with some initial values for <span class="math">\(w\)</span> and <span class="math">\(b\)</span> (usually random values in <span class="math">\([-\epsilon, \epsilon]\)</span>)</p></li>
+<li><p>initialize the model parameters</p>
+<ul>
+<li><span class="math">\(w^{[l]} = np.random.randn(n^{[l]}, n^{[l-1]}) * 0.01\)</span> for <span class="math">\(l=1, ..., L\)</span></li>
+<li><span class="math">\(b^{[l]} = np.zeros((n^{[l]}, 1))\)</span></li>
+</ul></li>
 <li><p>for each epoch</p>
 <ul>
-<li><p>set <span class="math">\(a^{[0]} = x\)</span></p></li>
-<li><p>perform forward-propagation to compute <span class="math">\(a^{[l]}\)</span> for <span class="math">\(l=\{1, 2, ..., L\}\)</span></p>
-<ul>
-<li><span class="math">\(z^{[l]} = w^{[l]} a^{[l-1]} + b^{[l]}\)</span></li>
-<li><span class="math">\(a^{[l]} = g^{[l]}(z^{[l]})\)</span></li>
-</ul>
+<li><p>set <span class="math">\(A^{[0]} = X\)</span></p></li>
+<li><p>perform forward-propagation to compute <span class="math">\(A^{[l]}\)</span> for <span class="math">\(l=\{1, 2, ..., L\}\)</span></p>
 <div class="figure">
 <img src="../images/nn_fwd.png" />
-</div></li>
+</div>
+<ul>
+<li><span class="math">\(Z^{[l]} = w^{[l]} A^{[l-1]} + b^{[l]}\)</span></li>
+<li><span class="math">\(A^{[l]} = g^{[l]}(Z^{[l]})\)</span></li>
+</ul></li>
 <li><p>perform back-propagation: back propagate the error through each layer</p>
 <div class="figure">
 <img src="../images/nn_bkp.png" />
 </div>
 <ul>
 <li><p>last layer</p>
-<p><span class="math">\(dz^{[L]} = \frac{\partial \ J}{\partial \ z^{[l]}} = a^{[L]} - y\)</span></p>
-<p><span class="math">\(dw^{[L]} = \frac{\partial \ J}{\partial \ w^{[L]}} = \frac{1}{m} dz^{[L]} a^{[L-1]}\)</span></p>
-<p><span class="math">\(db^{[L]} = \frac{\partial \ J}{\partial b^{[L]}} = \frac{1}{m} dz^{[L]}\)</span></p></li>
+<p><span class="math">\(dz^{[L]} = \frac{\partial \ J}{\partial \ Z^{[l]}} = A^{[L]} - Y\)</span></p>
+<p><span class="math">\(dw^{[L]} = \frac{\partial \ J}{\partial \ w^{[L]}} = \frac{1}{m} dz^{[L]} A^{[L-1]^T}\)</span></p>
+<p><span class="math">\(db^{[L]} = \frac{\partial \ J}{\partial b^{[L]}} = np.mean(dz^{[L]}, axis=1, keepdims=True)\)</span></p></li>
 <li><p>previous layers</p>
-<p><span class="math">\(dz^{[l]} = w^{[l+1]^T} dz^{[l+1]} * g&#39;^{[l]}(z^{[l]})\)</span></p>
-<p><span class="math">\(dw^{[l]} = \frac{1}{m} dz^{[l+1]} a^{[l-1]}\)</span></p>
-<p><span class="math">\(db^{[l]} = \frac{1}{m} dz^{[l+1]}\)</span></p></li>
+<p><span class="math">\(dz^{[l]} = w^{[l+1]^T} dz^{[l+1]} * g&#39;^{[l]}(Z^{[l]})\)</span></p>
+<p><span class="math">\(dw^{[l]} = \frac{1}{m} dz^{[l]} A^{[l-1]^T}\)</span></p>
+<p><span class="math">\(db^{[l]} = np.mean(dz^{[l]}, axis=1, keepdims=True)\)</span></p></li>
 <li><p>update the weights and biases for every layer</p>
 <p><span class="math">\(w^{[l]} = w^{[l]} - \alpha \ dw^{[l]}\)</span></p>
 <p><span class="math">\(b^{[l]} = b^{[l]} - \alpha \ db^{[l]}\)</span></p></li>

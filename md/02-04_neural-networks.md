@@ -24,7 +24,7 @@ Adding more layers helps computing even more complex functions on the input data
 
 ## Notation
 
-* training set $\left\{(x^{(1)}, y^{(1)}), (x^{(2)}, y^{(2)}), ..., (x^{(m)}, y^{(m)})\right\}$ with $m$ training samples
+* training set $X = \left\{(x^{(1)}, y^{(1)}), (x^{(2)}, y^{(2)}), ..., (x^{(m)}, y^{(m)})\right\}$ with $m$ training samples
 
 * each input variable has $n$ features: $x^{(i)}=\{x_1^{(i)}, x_2^{(i)}, ..., x_n^{(i)}\}$
 
@@ -34,9 +34,9 @@ Adding more layers helps computing even more complex functions on the input data
 
 * $n^{[l]}$: the number of units (neurons) in layer $l$
 
-* $w^{[l]}$: weights matrix $\left[ n^{[l]} \ \times \ n^{[l-1]} \right]$ controlling function mapping from layer $l-1$ to layer $l$; $w_{ij}^{[l]}$: weight to unit $i$ in layer $l$ from unit $j$ in layer $l-1$
+* $w^{[l]}$: weights matrix $\left[ n^{[l]},\ n^{[l-1]} \right]$ controlling function mapping from layer $l-1$ to layer $l$; $w_{ij}^{[l]}$: weight to unit $i$ in layer $l$ from unit $j$ in layer $l-1$
 
-* $b^{[l]}$: bias vector $\left[ n^{[l]}, 1 \right]$ on layer $l$; $b_{i}^{[l]}$: bias on unit $i$ in layer $l$
+* $b^{[l]}$: bias vector $\left[ n^{[l]},\ 1 \right]$ on layer $l$; $b_{i}^{[l]}$: bias on unit $i$ in layer $l$
 
 * activation values outputed from layer $l$
 
@@ -57,40 +57,48 @@ Adding more layers helps computing even more complex functions on the input data
 * Model's architecture
 
     * fully connected network
-    * $L$ layers
-    * input layer with $m$ units (a training sample $x$)
-    * output layer with $K$ units ($\hat{y} = h_{\Theta}(x) \in \mathbb{R}^{K}$)
-    * $L-1$ hidden layers with $s_{l}$ units (for $l \in \{1,...,L-1\}$)
+    * $L=3$ layers
+    * input layer with $n=3$ units (a training sample $x$)
+    * output layer with $K=4$ units ($\hat{y} = h_{\Theta}(x) \in \mathbb{R}^{K}$)
+    * $L-1=2$ hidden layers with $n^{[l]}=5$ units (for $l \in \{1,...,L-1\}$)
 
     ![](../images/nn_multiclass-classification.png)
 
 * Model's parameters
 
-    $w=\left\{ w^{[1]}, w^{[2]}, ..., w^{[L]} \right\}$  
-    $b=\left\{ b^{[1]}, b^{[2]}, ..., b^{[L]} \right\}$
+    * $w=\left\{ w^{[1]}, w^{[2]}, ..., w^{[L]} \right\}$
+    * $b=\left\{ b^{[1]}, b^{[2]}, ..., b^{[L]} \right\}$
 
-* Cost function (depends on the output activation function)
+* Data
 
-    $J(w, b) = \frac{1}{m} \sum_{i=1}^{m} \mathscr{L}(\hat{y}, y) = \frac{1}{m} \sum_{i=1}^{m} \sum_{k=1}^{K} \left( -y_k^{(i)}\ log\ \hat{y}_k^{(i)} - (1 - y_k^{(i)})\ log\ (1 - \hat{y}_k^{(i)}) \right)$
+    * $X = \left[ n,\ m \right]$ matrix
+    * $Y = \left[ K,\ m \right]$ matrix
+
+* Cost function (for the softmax activation function)
+
+    $J(w, b) = \frac{1}{m} \sum_{i=1}^{m} \mathscr{L}(\hat{y}, y) = \frac{1}{m} \sum_{i=1}^{m} \sum_{k=1}^{K} \left( -y_k^{(i)}\ log\ \hat{y}_k^{(i)}\right)$
 
 * Goal
 
     $\underset{w, b}{\operatorname{min}} J(w, b)$
 
-* Algorithm
+* Algorithm (vectorized implementation)
 
-    * start with some initial values for $w$ and $b$ (usually random values in $[-\epsilon, \epsilon]$)
+    * initialize the model parameters
+
+        * $w^{[l]} = np.random.randn(n^{[l]}, n^{[l-1]}) * 0.01$ for $l=1, ..., L$
+        * $b^{[l]} = np.zeros((n^{[l]}, 1))$
 
     * for each epoch
     
-        * set $a^{[0]} = x$
+        * set $A^{[0]} = X$
 
-        * perform forward-propagation to compute $a^{[l]}$ for $l=\{1, 2, ..., L\}$
-
-            * $z^{[l]} = w^{[l]} a^{[l-1]} + b^{[l]}$
-            * $a^{[l]} = g^{[l]}(z^{[l]})$
+        * perform forward-propagation to compute $A^{[l]}$ for $l=\{1, 2, ..., L\}$
 
             ![](../images/nn_fwd.png)
+
+            * $Z^{[l]} = w^{[l]} A^{[l-1]} + b^{[l]}$
+            * $A^{[l]} = g^{[l]}(Z^{[l]})$
 
         * perform back-propagation: back propagate the error through each layer
 
@@ -98,19 +106,19 @@ Adding more layers helps computing even more complex functions on the input data
 
             * last layer
 
-                $dz^{[L]} = \frac{\partial \ J}{\partial \ z^{[l]}} = a^{[L]} - y$
+                $dz^{[L]} = \frac{\partial \ J}{\partial \ Z^{[l]}} = A^{[L]} - Y$
 
-                $dw^{[L]} = \frac{\partial \ J}{\partial \ w^{[L]}} = \frac{1}{m} dz^{[L]} a^{[L-1]}$
+                $dw^{[L]} = \frac{\partial \ J}{\partial \ w^{[L]}} = \frac{1}{m} dz^{[L]} A^{[L-1]^T}$
 
-                $db^{[L]} = \frac{\partial \ J}{\partial b^{[L]}} = \frac{1}{m} dz^{[L]}$
+                $db^{[L]} = \frac{\partial \ J}{\partial b^{[L]}} = np.mean(dz^{[L]}, axis=1, keepdims=True)$
 
             * previous layers
 
-                $dz^{[l]} = w^{[l+1]^T} dz^{[l+1]} * g'^{[l]}(z^{[l]})$
+                $dz^{[l]} = w^{[l+1]^T} dz^{[l+1]} * g'^{[l]}(Z^{[l]})$
 
-                $dw^{[l]} = \frac{1}{m} dz^{[l+1]} a^{[l-1]}$
+                $dw^{[l]} = \frac{1}{m} dz^{[l]} A^{[l-1]^T}$
 
-                $db^{[l]} = \frac{1}{m} dz^{[l+1]}$
+                $db^{[l]} = np.mean(dz^{[l]}, axis=1, keepdims=True)$
 
             * update the weights and biases for every layer
 
