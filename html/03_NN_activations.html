@@ -10,9 +10,13 @@
 </head>
 <body>
 <h1 id="activation-functions-in-neural-networks"><span class="header-section-number">1</span> Activation functions in neural networks</h1>
-<h2 id="sigmoid-fx-frac11mathrme-x"><span class="header-section-number">1.1</span> Sigmoid <span class="math">\(f(x) = \frac{1}{1+\mathrm{e}^{-x}}\)</span></h2>
+<h2 id="sigmoid-logistic-function"><span class="header-section-number">1.1</span> Sigmoid / Logistic function</h2>
+<div class="figure">
+<img src="../images/activation-function_logistic.png" />
+</div>
 <p>Description</p>
 <ul>
+<li><span class="math">\(g(z) = \sigma(z) = \frac{1}{1+\mathrm{e}^{-z}}\)</span>; <span class="math">\(g&#39;(z)=g(z)\left( 1 - g(z) \right)\)</span></li>
 <li>squashes numbers to range [0, 1]<br /> high values near 1, high negative values near 0</li>
 <li>has a nice interpretation of saturating the &quot;firing rate&quot; of a neuron</li>
 </ul>
@@ -22,9 +26,13 @@
 <li>sigmoid outputs are not zero-centered (inneficient gradient updates)</li>
 <li>the exponential function is computationally expensive</li>
 </ul>
-<h2 id="tanh-fx-tanhx"><span class="header-section-number">1.2</span> Tanh <span class="math">\(f(x) = tanh(x)\)</span></h2>
+<h2 id="tanh"><span class="header-section-number">1.2</span> Tanh</h2>
+<div class="figure">
+<img src="../images/activation-function_tanh.png" />
+</div>
 <p>Description</p>
 <ul>
+<li><span class="math">\(g(z) = tanh(z) = \frac{\mathrm{e}^{z} - \mathrm{e}^{-z}}{\mathrm{e}^{z} + \mathrm{e}^{-z}}\)</span>; <span class="math">\(g&#39;(z) = 1 - g(z)^2\)</span></li>
 <li>squashes numbers to range [-1, 1]<br /> high values near 1, high negative values near -1</li>
 <li>outputs are zero-centered</li>
 </ul>
@@ -32,9 +40,13 @@
 <ul>
 <li>saturated neurons &quot;kill&quot; the gradient</li>
 </ul>
-<h2 id="relu-rectified-linear-unit-fx-max0-x"><span class="header-section-number">1.3</span> ReLU (REctified Linear Unit) <span class="math">\(f(x) = max(0, x)\)</span></h2>
+<h2 id="relu-rectified-linear-unit"><span class="header-section-number">1.3</span> ReLU (REctified Linear Unit)</h2>
+<div class="figure">
+<img src="../images/activation-function_relu.png" />
+</div>
 <p>Description</p>
 <ul>
+<li><span class="math">\(g(z) = max(0, z)\)</span>; <span class="math">\(g&#39;(z)=0\)</span> if <span class="math">\(z \lt 0\)</span>, <span class="math">\(g&#39;(z)=1\)</span> if <span class="math">\(z \gt 0\)</span></li>
 <li>does not saturate in the positive region</li>
 <li>very computationally efficient</li>
 <li>converges much faster than sigmoid/tanh in practice</li>
@@ -45,13 +57,25 @@
 <li>saturated neurons in the negative region</li>
 <li>dead ReLUs will never activate and therefore will never update</li>
 </ul>
-<h2 id="leaky-relu-fx-max0.1-x-x"><span class="header-section-number">1.4</span> Leaky ReLU <span class="math">\(f(x) = max(0.1 x, x)\)</span></h2>
+<h2 id="leaky-relu"><span class="header-section-number">1.4</span> Leaky ReLU</h2>
+<div class="figure">
+<img src="../images/activation-function_leaky-relu.png" />
+</div>
 <p>Description</p>
 <ul>
+<li><span class="math">\(g(z) = max(0.01 z, z)\)</span>; <span class="math">\(g&#39;(z)=0.01\)</span> if <span class="math">\(z \lt 0\)</span>, <span class="math">\(g&#39;(z)=1\)</span> if <span class="math">\(z \gt 0\)</span></li>
 <li>does not saturate</li>
-<li>computationally efficien</li>
+<li>computationally efficient</li>
 <li>converges faster than sigmoid/tanh in practice</li>
 <li>will not die</li>
+</ul>
+<h2 id="softmax-function"><span class="header-section-number">1.5</span> Softmax function</h2>
+<p>Description</p>
+<ul>
+<li><span class="math">\(g(z_j) = \frac{\mathrm{e}^{z_j}}{\sum_{k=1}^{K} \mathrm{e}^{z_k}}\)</span> for <span class="math">\(j=1,2,...,K\)</span></li>
+<li>used as the output activation function in a multiclass classification problem</li>
+<li>is a generalization of the logistic function</li>
+<li>squashes a <span class="math">\(K\)</span>-dimensional vector <span class="math">\(z\)</span> of arbitrary real values to an other <span class="math">\(K\)</span>-dimensional vector of real values, where each entry is in the range [0, 1] and all entries sum up to 1</li>
 </ul>
 </body>
 </html>
